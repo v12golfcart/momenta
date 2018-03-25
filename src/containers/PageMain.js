@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 // components
 import DailyHabitCard from './DailyHabitCard';
+import { Header } from '../components';
 
 // other
 import { colors } from '../themes';
@@ -22,6 +23,7 @@ class PageMain extends Component {
     console.log('first page props', this.props);
     return (
       <View style={styles.container}>
+        <Header />
         <DailyHabitCard />
         <DailyHabitCard />
       </View>

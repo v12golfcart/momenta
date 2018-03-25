@@ -37,7 +37,7 @@ export default class App extends Component<Props> {
     return (
       <Provider store={store}>
         <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="light-content" />
+          <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <Router />
         </SafeAreaView>
       </Provider>

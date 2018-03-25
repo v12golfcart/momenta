@@ -1,29 +1,23 @@
 // libraries
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-
-// other
-import { colors } from '../themes';
+import { StyleSheet, View, Text, } from 'react-native';
 
 /* Components ==================================================================== */
-
-const Card = (props) => {
-  const { children } = props;
-
+const Header = (props) => {
   return (
     <View style={styles.container}>
-      {children}
+      <Text>Hello World!</Text>
     </View>    
   );
 };
 
+
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundLight,
-    borderRadius: 8,
+    height: 100,
   }
 });
 
 /* Export ==================================================================== */
-export { Card };
+export { Header };

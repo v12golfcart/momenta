@@ -16,10 +16,6 @@ class DailyHabitCard extends Component {
         <Card>
           <View style={styles.wrapperCardContent}>
             <Text style={styles.title}>Wes Bayer</Text>
-            <Text>Hello World!</Text>
-            <Text>Hello World!</Text>
-            <Text>Hello World!</Text>
-            <Text>Hello World!</Text>
           </View>
         </Card>
       </View>
@@ -35,11 +31,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   wrapperCardContent: {
-    paddingLeft: 8,
-    paddingRight: 8,
+    padding: 8,
   },
   title: {
-    marginTop: 8,
     fontSize: 15,
     fontFamily: 'Helvetica Neue',
     color: colors.secondary1,

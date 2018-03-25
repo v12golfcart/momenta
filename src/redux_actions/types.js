@@ -1,1 +1,3 @@
-export const UI_TOGGLE_TEST = 'ui_toggle_test';
+export const UI_TOGGLE_TEST = 'UI_TOGGLE_TEST';
+
+export const WORKSPACE_ADD_USER = 'WORKSPACE_ADD_USER';
