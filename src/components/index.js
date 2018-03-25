@@ -1,2 +1,2 @@
 export * from './Template';
-export * from './SecondPage';
+export * from './Card';

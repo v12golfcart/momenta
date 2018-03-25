@@ -1,10 +1,13 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, } from 'react-native';
 import { connect } from 'react-redux';
 
-// redux
-import * as Actions from '../redux_actions';
+// components
+import DailyHabitCard from './DailyHabitCard';
+
+// other
+import { colors } from '../themes';
 
 /* Components ==================================================================== */
 const mapStateToProps = state => {
@@ -13,21 +16,14 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {
-  testToggleUi: Actions.testToggleUi,
-};
-
 /* Components ==================================================================== */
-class FirstPage extends Component {  
+class PageMain extends Component {  
   render() {
     console.log('first page props', this.props);
     return (
       <View style={styles.container}>
-        <TouchableHighlight
-          onPress={this.props.testToggleUi}
-        >
-          <Text>Hello World!</Text>
-        </TouchableHighlight>
+        <DailyHabitCard />
+        <DailyHabitCard />
       </View>
     );
   }
@@ -36,11 +32,11 @@ class FirstPage extends Component {
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundDark,
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 10,
   }
 });
 
 /* Export ==================================================================== */
-export default connect(mapStateToProps, mapDispatchToProps)(FirstPage);
+export default connect(mapStateToProps, null)(PageMain);

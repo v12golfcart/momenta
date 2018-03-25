@@ -2,11 +2,17 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
+// other
+import { colors } from '../themes';
+
 /* Components ==================================================================== */
-const SecondPage = () => {
+
+const Card = (props) => {
+  const { children } = props;
+
   return (
     <View style={styles.container}>
-      <Text>Hello Again!</Text>
+      {children}
     </View>    
   );
 };
@@ -14,11 +20,10 @@ const SecondPage = () => {
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    flex: 1,
-    justifyContent: 'center',    
+    backgroundColor: colors.backgroundLight,
+    borderRadius: 8,
   }
 });
 
 /* Export ==================================================================== */
-export { SecondPage };
+export { Card };

@@ -5,13 +5,16 @@ import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
 
 // redux
 import reducers from './redux_reducers';
 
 // components
 import Router from './Router';
+
+// other
+import { colors } from './themes';
 
 /* Components ==================================================================== */
 type Props = {};
@@ -33,9 +36,10 @@ export default class App extends Component<Props> {
 
     return (
       <Provider store={store}>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="light-content" />
           <Router />
-        </View>
+        </SafeAreaView>
       </Provider>
     );
   }
@@ -45,6 +49,6 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundDark,
   },
 });
