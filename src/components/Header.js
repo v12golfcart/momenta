@@ -1,8 +1,9 @@
 // libraries
 import React from 'react';
-import { StyleSheet, View, Text, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
 
 // other
 import { colors } from '../themes';
@@ -28,7 +29,11 @@ const Header = (props) => {
       </AnimatedCircularProgress>
 
       <View style={styles.wrapperSettings}>
-        <Icon name="settings" style={styles.iconSettings} />
+        <TouchableOpacity 
+          onPress={() => Actions.settings()}
+        >
+          <Icon name="settings" style={styles.iconSettings} />
+        </TouchableOpacity>
       </View>
     </View>    
   );

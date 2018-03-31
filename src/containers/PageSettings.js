@@ -1,30 +1,20 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, } from 'react-native';
-import { connect } from 'react-redux';
+import { StyleSheet, View } from 'react-native';
 
 // components
-import DailyHabitCard from './DailyHabitCard';
-import { Header } from '../components';
+import SettingsPeopleCard from './SettingsPeopleCard';
+import { Card, Button } from '../components';
 
 // other
 import { colors } from '../themes';
 
 /* Components ==================================================================== */
-const mapStateToProps = state => {
-  return {
-    miscUi: state
-  };
-};
-
-/* Components ==================================================================== */
-class PageMain extends Component {  
+class PageSettings extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header />
-        <DailyHabitCard />
-        <DailyHabitCard />
+        <SettingsPeopleCard />
       </View>
     );
   }
@@ -35,9 +25,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.backgroundDark,
     flex: 1,
-    paddingTop: 10,
   }
 });
 
 /* Export ==================================================================== */
-export default connect(mapStateToProps, null)(PageMain);
+export default PageSettings;

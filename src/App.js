@@ -5,13 +5,14 @@ import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 
 // redux
 import reducers from './redux_reducers';
 
 // components
 import Router from './Router';
+import ModalConductor from './ModalConductor';
 
 // other
 import { colors } from './themes';
@@ -39,6 +40,7 @@ export default class App extends Component<Props> {
         <SafeAreaView style={styles.container}>
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <Router />
+          <ModalConductor />
         </SafeAreaView>
       </Provider>
     );
