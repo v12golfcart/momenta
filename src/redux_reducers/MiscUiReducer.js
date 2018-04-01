@@ -2,6 +2,7 @@ import {
   UI_TOGGLE_TEST,
   MODAL_OPEN,
   MODAL_CLOSE,
+  ADD_USER,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
@@ -27,6 +28,12 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case MODAL_CLOSE:
+      return {
+        ...state,
+        isModalVisible: false,
+      };
+
+    case ADD_USER:
       return {
         ...state,
         isModalVisible: false,

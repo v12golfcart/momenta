@@ -44,7 +44,7 @@ class ModalAddPerson extends Component {
   onPressAddUser = () => {
     const { addUser, newUserName } = this.props;
 
-    addUser(newUserName);
+    addUser({ name: newUserName });
   }
 
   render() {

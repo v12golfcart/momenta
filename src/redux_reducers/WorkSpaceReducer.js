@@ -1,15 +1,17 @@
-import { ADD_USER } from '../redux_actions/types';
+import { USER_FETCH_SUCCESS } from '../redux_actions/types';
 
 const INITIAL_STATE = {
-  workspaceId: '',
-  userIDs: [],
+  users: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
-    case ADD_USER:
-      return state;
+    case USER_FETCH_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
+      };
 
     default:
       return state;

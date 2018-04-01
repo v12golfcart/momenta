@@ -1,5 +1,6 @@
 import { 
   EDIT_USER_NAME,
+  ADD_USER,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
@@ -13,6 +14,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         newUserName: action.payload,
+      };
+
+    case ADD_USER:
+      return {
+        ...INITIAL_STATE,
       };
 
     default:

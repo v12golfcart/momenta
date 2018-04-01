@@ -1,6 +1,7 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, } from 'react-native';
+import { StyleSheet, Text, } from 'react-native';
+import PropTypes from 'prop-types';
 
 // components
 import { Card, Row } from '../components';
@@ -11,15 +12,22 @@ import { colors } from '../themes';
 /* Components ==================================================================== */
 class DailyHabitCard extends Component {
   render() {
+    const { user } = this.props;
+
     return (
       <Card>
         <Row>
-          <Text style={styles.title}>Wes Bayer</Text>
+          <Text style={styles.title}>{user.name}</Text>
         </Row>
       </Card>
     );
   }
 }
+
+
+DailyHabitCard.propTypes = {
+  user: PropTypes.object,
+};
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({

@@ -7,6 +7,7 @@ export const MODAL_CLOSE = 'MODAL_CLOSE';
 export const MODAL_ADD_PERSON = 'MODAL_ADD_PERSON';
 
 // Workspace
+export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';
 
 // USER
 export const EDIT_USER_NAME = 'EDIT_USER_NAME';
