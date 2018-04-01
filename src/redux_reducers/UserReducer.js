@@ -1,6 +1,5 @@
 import { 
   EDIT_USER_NAME,
-  WORKSPACE_ADD_USER,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
@@ -14,11 +13,6 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         newUserName: action.payload,
-      };
-
-    case WORKSPACE_ADD_USER:
-      return {
-        ...state,
       };
 
     default:

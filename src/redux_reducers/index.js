@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import MiscUiReducer from './MiscUiReducer';
-//import WorkSpaceReducer from './WorkSpaceReducer';
-import SettingsReducer from './SettingsReducer';
+import WorkspaceReducer from './WorkspaceReducer';
+import UserReducer from './UserReducer';
 
 export default combineReducers({
   miscUi: MiscUiReducer,
-  //workspace: WorkSpaceReducer,
-  settings: SettingsReducer,
+  workspace: WorkspaceReducer,
+  settings: UserReducer,
 });

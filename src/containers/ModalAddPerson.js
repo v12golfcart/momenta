@@ -26,6 +26,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   closeModal: Actions.closeModal,
   editUserName: Actions.editUserName,
+  addUser: Actions.addUser,
 };
 
 /* Components ==================================================================== */
@@ -40,14 +41,20 @@ class ModalAddPerson extends Component {
     editUserName('');
   }
 
+  onPressAddUser = () => {
+    const { addUser, newUserName } = this.props;
+
+    addUser(newUserName);
+  }
+
   render() {
-    const { isModalVisible, closeModal, newUserName } = this.props;
+    const { isModalVisible, newUserName } = this.props;
 
     return (
       <Modal
         isVisible={isModalVisible}
         style={styles.modal}
-        onBackdropPress={closeModal}
+        onBackdropPress={this.onCloseHandler}
         animationIn="fadeIn"
         animationOut="fadeOut"
       >
@@ -76,7 +83,7 @@ class ModalAddPerson extends Component {
 
           <Row>
             <Button
-              onPressButton={() => console.log('sup')}
+              onPressButton={this.onPressAddUser}
             >
               Add
             </Button>            
@@ -93,6 +100,7 @@ ModalAddPerson.propTypes = {
   newUserName: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired, 
   editUserName: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */

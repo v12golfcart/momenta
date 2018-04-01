@@ -8,6 +8,6 @@ export const MODAL_ADD_PERSON = 'MODAL_ADD_PERSON';
 
 // Workspace
 
-// Settings
+// USER
 export const EDIT_USER_NAME = 'EDIT_USER_NAME';
-export const WORKSPACE_ADD_USER = 'WORKSPACE_ADD_USER';
+export const ADD_USER = 'ADD_USER';
