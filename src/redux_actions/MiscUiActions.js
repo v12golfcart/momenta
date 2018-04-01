@@ -22,4 +22,4 @@ export const closeModal = () => {
   return {
     type: MODAL_CLOSE,
   };
-}
+};

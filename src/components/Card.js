@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.backgroundLight,
     borderRadius: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 16,    
   }
 });
 

@@ -1,7 +1,7 @@
 // libraries
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 
@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import * as Actions from '../redux_actions';
 
 // components
-import { Card, Row } from '../components';
+import { Card, Row, Button } from '../components';
 
 // other
 import { colors } from '../themes';
+import { MODAL_ADD_PERSON } from '../redux_actions/types';
 
 /* Redux ==================================================================== */
 const mapDispatchToProps = {
@@ -23,28 +24,21 @@ const mapDispatchToProps = {
 class SettingsPeopleCard extends Component {
   render() {
     return (
-      <View style={styles.container}>
         <Card>
 
-          <View style={styles.wrapperCardContent}>
+          <Row>
             <Text style={styles.title}>People in workspace:</Text>
-            <Row>
-                <TouchableOpacity 
-                  style={styles.wrapperAdd}
-                  onPress={() => this.props.openModal('test')}
-                >
-                  <LinearGradient 
-                    colors={[colors.primary1, colors.primary2]} 
-                    style={styles.linearGradient}
-                  >
-                    <Icon name="add" style={styles.iconAdd} />
-                  </LinearGradient>
-                </TouchableOpacity>
-            </Row>
-          </View>
+          </Row>
+
+          <Row>
+            <Button
+              onPressButton={() => this.props.openModal(MODAL_ADD_PERSON)}
+            >
+              <Icon name="add" style={styles.iconAdd} />
+            </Button>
+          </Row>
 
         </Card>
-      </View>
     );
   }
 }
@@ -56,23 +50,10 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginBottom: 16,
   },
-  wrapperCardContent: {
-    padding: 8,
-  },
   title: {
     fontSize: 15,
     fontFamily: 'Helvetica Neue',
     color: colors.secondary1,
-  },
-  wrapperAdd: {
-    flexDirection: 'row', 
-    flex: 1,
-  },
-  linearGradient: {
-    flex: 1,
-    borderRadius: 25 / 2,
-    alignItems: 'center',
-    padding: 4,
   },
   iconAdd: {
     fontSize: 24,

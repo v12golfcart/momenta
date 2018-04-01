@@ -1,10 +1,15 @@
 // libs
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Modal from 'react-native-modal';
 
 // redux
 import { connect } from 'react-redux';
+
+// components
+import ModalAddPerson from './containers/ModalAddPerson';
+
+// other
+import { MODAL_ADD_PERSON } from './redux_actions/types';
 
 /* Redux ==================================================================== */
 const mapStateToProps = state => {
@@ -15,18 +20,28 @@ const mapStateToProps = state => {
 
 /* Components ==================================================================== */
 class ModalConductor extends Component {
+  renderModal = (isModalVisible, modalType) => {
+    switch (modalType) {
+      
+      case MODAL_ADD_PERSON:
+        return (
+          <ModalAddPerson 
+            isModalVisible={isModalVisible}
+          />
+        );
+
+      default:
+        return <View />;
+    }
+  }
+
   render() {
     const { isModalVisible, modalType } = this.props.miscUi;
     //console.log('modal conductor props', this.props);
-
     return (
-      <Modal
-        isVisible={isModalVisible}
-      >
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <Text>Sup</Text>
-        </View>
-      </Modal>
+      <View>
+        {this.renderModal(isModalVisible, modalType)}
+      </View>
     );
   }
 }
