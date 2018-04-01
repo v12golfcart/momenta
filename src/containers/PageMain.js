@@ -34,7 +34,7 @@ class PageMain extends Component {
     this.props.fetchUsers();
   }
 
-  renderPeople = () => {
+  renderUsers = () => {
     const { users } = this.props;
 
     const arrayOfUsers = _.map(users, (val, uid) => {
@@ -55,7 +55,7 @@ class PageMain extends Component {
     return (
       <View style={styles.container}>
         <Header />
-        {this.renderPeople()}
+        {this.renderUsers()}
       </View>
     );
   }

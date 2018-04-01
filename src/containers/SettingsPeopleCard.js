@@ -1,9 +1,10 @@
 // libraries
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 // redux
 import * as Actions from '../redux_actions';
@@ -16,12 +17,38 @@ import { colors } from '../themes';
 import { MODAL_ADD_PERSON } from '../redux_actions/types';
 
 /* Redux ==================================================================== */
+const mapSateToProps = state => {
+  return {
+    users: state.workspace.users
+  };
+};
+
 const mapDispatchToProps = {
   openModal: Actions.openModal,
 };
 
 /* Components ==================================================================== */
 class SettingsPeopleCard extends Component {
+  
+  renderUsers = () => {
+    const { users } = this.props;
+
+    const arrayOfUsers = _.map(users, (val, uid) => {
+      return { uid, ...val };
+    });
+
+    return arrayOfUsers.map(user => {
+      return (
+        <Row
+          additionalStyles={styles.additionalRowStyles}
+          key={user.uid}
+        >
+          <Text style={styles.text}>{user.name}</Text>
+        </Row>
+      );
+    });      
+  }
+
   render() {
     return (
         <Card>
@@ -29,6 +56,8 @@ class SettingsPeopleCard extends Component {
           <Row>
             <Text style={styles.title}>People in workspace:</Text>
           </Row>
+
+          {this.renderUsers()}
 
           <Row>
             <Button
@@ -51,9 +80,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: 'Helvetica Neue',
     color: colors.secondary1,
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
+  },
+  additionalRowStyles: { 
+    borderBottomWidth: 1, 
+    borderColor: colors. backgroundDark,
   },
   iconAdd: {
     fontSize: 24,
@@ -62,4 +99,4 @@ const styles = StyleSheet.create({
 });
 
 /* Export ==================================================================== */
-export default connect(null, mapDispatchToProps)(SettingsPeopleCard);
+export default connect(mapSateToProps, mapDispatchToProps)(SettingsPeopleCard);

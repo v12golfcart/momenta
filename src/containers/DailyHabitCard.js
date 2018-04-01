@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
   },
   title: {
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: 'Helvetica Neue',
     color: colors.secondary1,
   }
