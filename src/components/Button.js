@@ -20,7 +20,9 @@ const Button = (props) => {
         colors={[colors.primary1, colors.primary2]} 
         style={styles.linearGradient}
       >
-        {children}
+        <Text style={styles.buttonText}>
+          {children}
+        </Text>
       </LinearGradient>
     </TouchableOpacity>    
   );
@@ -33,10 +35,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },  
   buttonText: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    fontSize: 15,
-    color: colors.primary1,
+    fontSize: 18,
+    color: '#fff',
   },
   linearGradient: {
     flex: 1,

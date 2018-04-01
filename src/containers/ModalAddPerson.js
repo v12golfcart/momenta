@@ -1,48 +1,118 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 // redux
 import * as Actions from '../redux_actions';
 
 // components
-import { Card } from '../components';
+import { Card, Row, Button } from '../components';
+import CustomInput from './CustomInput';
 
 // other
 import { colors } from '../themes';
 
 /* Components ==================================================================== */
+const mapStateToProps = state => {
+  return {
+    newUserName: state.settings.newUserName
+  };
+};
+
 const mapDispatchToProps = {
   closeModal: Actions.closeModal,
+  editUserName: Actions.editUserName,
 };
 
 /* Components ==================================================================== */
 class ModalAddPerson extends Component {  
+  
+  onChangeName = text => this.props.editUserName(text);
+
+  onCloseHandler = () => {
+    const { closeModal, editUserName } = this.props;
+
+    closeModal();
+    editUserName('');
+  }
+
   render() {
-    const { isModalVisible, closeModal } = this.props;
+    const { isModalVisible, closeModal, newUserName } = this.props;
 
     return (
       <Modal
         isVisible={isModalVisible}
         style={styles.modal}
+        onBackdropPress={closeModal}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
       >
         <Card>
-          <Text>Sup</Text>
-          <TouchableHighlight onPress={closeModal}>
-            <Text>Close</Text>
-          </TouchableHighlight>
+          <Row>
+            <TouchableOpacity
+              style={styles.wrapperIconClose}
+              onPress={this.onCloseHandler}
+            >
+              <Icon name="close" style={styles.iconClose} />
+            </TouchableOpacity>
+          </Row>
+
+          <Row>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Add person to workspace</Text>
+            </View>
+          </Row>
+
+          <Row>
+            <CustomInput 
+              value={newUserName}
+              onChangeText={this.onChangeName}
+            />
+          </Row>
+
+          <Row>
+            <Button
+              onPressButton={() => console.log('sup')}
+            >
+              Add
+            </Button>            
+          </Row>
+
         </Card>
       </Modal>
     );
   }
 }
 
+ModalAddPerson.propTypes = {
+  isModalVisible: PropTypes.bool.isRequired,   
+  newUserName: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired, 
+  editUserName: PropTypes.func.isRequired,
+};
+
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
-
+  wrapperIconClose: {
+    marginLeft: 'auto',
+  },
+  iconClose: {
+    fontSize: 24,
+    color: 'rgba(255, 255, 255, 0.24)',
+  },
+  header: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 18,
+    color: colors.primary2,
+  },
 });
 
 /* Export ==================================================================== */
-export default connect(null, mapDispatchToProps)(ModalAddPerson);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalAddPerson);
