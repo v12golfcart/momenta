@@ -19,7 +19,7 @@ import { colors } from '../themes';
 const mapStateToProps = state => {
   return {
     miscUi: state.miscUi,
-    users: state.workspace.users
+    users: state.workspace.users || {}
   };
 };
 
@@ -41,7 +41,17 @@ class PageMain extends Component {
       return { uid, ...val };
     });
 
-    return arrayOfUsers.map(user => {
+    const tempData = [
+      {
+        name: 'Bob',
+        uid: 'asdf',
+      },
+      {
+        name: 'Barry',
+        uid: 'jkl;',
+      }
+    ];
+    return tempData.map(user => {
       return (
         <DailyHabitCard
           user={user}

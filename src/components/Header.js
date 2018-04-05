@@ -16,17 +16,25 @@ const Header = (props) => {
         size={100}
         width={8}
         fill={80}
-        tintColor={colors.primary1}
+        tintColor={colors.primary2}
         backgroundColor="#3d5875"
       >
         {
           (fill) => (
-            <Text style={styles.progressText}>
-              {`${Math.round(fill, 0)} days`}
-            </Text>
+            <View style={styles.wrapperProgressText}>
+              <Text style={styles.progressTextTitle}>
+                Streak:
+              </Text>            
+              <Text style={styles.progressText}>
+                {`${Math.round(fill, 0)} days`}
+              </Text>
+            </View>
           )
         }
       </AnimatedCircularProgress>
+
+      <View style={styles.wrapperHeadingContent}>
+      </View>
 
       <View style={styles.wrapperSettings}>
         <TouchableOpacity 
@@ -48,13 +56,23 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     flexDirection: 'row',
   },
+  wrapperProgressText: {
+    alignItems: 'center',
+  },
+  progressTextTitle: {
+    color: colors.primary2,
+    fontSize: 12,
+  },
   progressText: {
-    color: colors.primary1,
-    fontSize: 15,
+    color: colors.primary2,
+    fontSize: 18,
   },
   iconSettings: {
     fontSize: 24,
     color: colors.primary2,
+  },
+  wrapperHeadingContent: {
+    flex: 1,
   },
   wrapperSettings: {
     marginRight: 16,

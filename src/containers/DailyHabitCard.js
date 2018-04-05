@@ -4,7 +4,7 @@ import { StyleSheet, Text, } from 'react-native';
 import PropTypes from 'prop-types';
 
 // components
-import { Card, Row } from '../components';
+import { Card, Row, Daily } from '../components';
 
 // other
 import { colors } from '../themes';
@@ -19,6 +19,11 @@ class DailyHabitCard extends Component {
         <Row>
           <Text style={styles.title}>{user.name}</Text>
         </Row>
+
+        <Daily 
+          isResolved
+        />
+
       </Card>
     );
   }

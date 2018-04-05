@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 
 // components
 import SettingsPeopleCard from './SettingsPeopleCard';
-import { Card, Button } from '../components';
 
 // other
 import { colors } from '../themes';

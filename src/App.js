@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
 
 // redux
 import reducers from './redux_reducers';
@@ -37,11 +37,11 @@ export default class App extends Component<Props> {
 
     return (
       <Provider store={store}>
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <Router />
           <ModalConductor />
-        </SafeAreaView>
+        </View>
       </Provider>
     );
   }

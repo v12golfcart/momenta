@@ -20,8 +20,11 @@ const RouterComponent = () => {
           <Scene key="main">
             <Scene 
               initial
-              hideNavBar
               key="firstPage"
+              title="Grit Workspace"
+              navigationBarStyle={styles.navBar}
+              titleStyle={styles.headerTitle}
+              navBarButtonColor={colors.primary2}
               component={PageMain}
             />
             <Scene
