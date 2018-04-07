@@ -1,7 +1,8 @@
 // libs
-import React from 'react';
-import { Scene, Router, Lightbox } from 'react-native-router-flux';
-import { StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Scene, Router, Lightbox, Actions } from 'react-native-router-flux';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // components
 import PageMain from './containers/PageMain';
@@ -12,6 +13,15 @@ import PageSettings from './containers/PageSettings';
 import { colors } from './themes';
 
 /* Components ==================================================================== */
+const renderSettingsIcon = () => (
+  <TouchableOpacity
+    onPress={() => Actions.settings()}
+    style={styles.wrapperSettings}
+  >
+    <Icon name="settings" style={styles.iconSettings} />
+  </TouchableOpacity>
+);
+
 const RouterComponent = () => {
   return (
     <Router>
@@ -25,6 +35,7 @@ const RouterComponent = () => {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.headerTitle}
               navBarButtonColor={colors.primary2}
+              renderRightButton={renderSettingsIcon}
               component={PageMain}
             />
             <Scene
@@ -47,11 +58,24 @@ const styles = StyleSheet.create({
   navBar: {
     backgroundColor: colors.backgroundDark, 
   },
+  wrapperSettings: {
+    padding: 8,
+    marginRight: 8,
+  },
   backButtonText: {
     color: 'white',
   },
   headerTitle: {
     color: colors.primary2,
+  },
+  iconSettings: {
+    fontSize: 24,
+    color: colors.primary2,
+  },
+  test: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'red',
   }
 });
 

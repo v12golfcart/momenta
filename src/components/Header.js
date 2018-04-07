@@ -36,13 +36,6 @@ const Header = (props) => {
       <View style={styles.wrapperHeadingContent}>
       </View>
 
-      <View style={styles.wrapperSettings}>
-        <TouchableOpacity 
-          onPress={() => Actions.settings()}
-        >
-          <Icon name="settings" style={styles.iconSettings} />
-        </TouchableOpacity>
-      </View>
     </View>    
   );
 };
@@ -67,16 +60,8 @@ const styles = StyleSheet.create({
     color: colors.primary2,
     fontSize: 18,
   },
-  iconSettings: {
-    fontSize: 24,
-    color: colors.primary2,
-  },
   wrapperHeadingContent: {
     flex: 1,
-  },
-  wrapperSettings: {
-    marginRight: 16,
-    marginLeft: 'auto',
   }
 });
 

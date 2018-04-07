@@ -41,17 +41,7 @@ class PageMain extends Component {
       return { uid, ...val };
     });
 
-    const tempData = [
-      {
-        name: 'Bob',
-        uid: 'asdf',
-      },
-      {
-        name: 'Barry',
-        uid: 'jkl;',
-      }
-    ];
-    return tempData.map(user => {
+    return arrayOfUsers.map(user => {
       return (
         <DailyHabitCard
           user={user}
