@@ -79,7 +79,7 @@ class ModalAddPerson extends Component {
               value={newUserName}
               title="Name"
               placeholder="Richard Cockburn"
-              onChangeText={this.onChangeDesc}
+              onChangeText={this.onChangeName}
             />
           </Row>
 
