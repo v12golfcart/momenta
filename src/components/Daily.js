@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { 
   StyleSheet, 
-  View 
+  View,
+  Text, 
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
@@ -26,12 +28,16 @@ class Daily extends Component {
   };
 
   render() {
+    const { description } = this.props;
 
     return (
       <Row>
         <View style={styles.container}>
 
-          <View style={styles.wrapperHotSpot}>
+          <TouchableOpacity 
+            style={styles.wrapperHotSpot}
+            onPress={() => console.log('resolver')}
+          >
             <View style={this.getStyles(styles.hotspotCircle, styles.hotspotCircleResolved)}>
               <View style={this.getStyles(styles.hotspotBorder, styles.hotspotBorderResolved)}>
                 <Icon 
@@ -40,12 +46,14 @@ class Daily extends Component {
                 />
               </View>
             </View>        
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.wrapperStreak}>
+            <Text style={styles.streak}>3</Text>
           </View>
 
           <View style={styles.wrapperText}>
+            <Text style={styles.text}>{description}</Text>
           </View>
 
         </View>
@@ -56,26 +64,20 @@ class Daily extends Component {
 
 Daily.propTypes = {
   isResolved: PropTypes.bool,
+  description: PropTypes.string,
 };
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
-  // main sections
   container: {
     flexDirection: 'row',
     flex: 1,
   },
-  wrapperHotSpot: {
-  },
-  wrapperStreak: {
-    backgroundColor: 'lightblue',
-    width: 44,
-  },
-  wrapperText: {
-    flex: 1,
-    backgroundColor: 'lightgreen',
-  },
+
   // resolved hotspot
+  wrapperHotSpot: {
+    justifyContent: 'center',
+  },  
   hotspotCircle: {
     backgroundColor: colors.backgroundDark,
     height: 32,
@@ -109,7 +111,29 @@ const styles = StyleSheet.create({
   },
   hotspotIconResolved: {
     opacity: 1,
-  }
+  },
+
+  // streak section
+  wrapperStreak: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  streak: {
+    color: colors.primary2,
+    fontSize: 15,
+  },
+
+  // text section
+  wrapperText: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 18,
+    color: colors.textMain
+  },  
 });
 
 /* Export ==================================================================== */

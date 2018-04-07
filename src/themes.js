@@ -8,4 +8,5 @@ export const colors = {
   happy: '',
   warning: '',
   error: '',
+  textMain: '#B7B8C8',
 };

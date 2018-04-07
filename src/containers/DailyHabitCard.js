@@ -22,6 +22,7 @@ class DailyHabitCard extends Component {
 
         <Daily 
           isResolved
+          description="What the hell do you think about this?"
         />
 
       </Card>
