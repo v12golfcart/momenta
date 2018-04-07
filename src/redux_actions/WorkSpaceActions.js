@@ -5,12 +5,16 @@ import firebase from 'firebase';
 import { 
   ADD_USER,
   USER_FETCH_SUCCESS,
+  ADD_TASK,
 } from './types';
 
 export const addUser = ({ name }) => {
   return (dispatch) => {
     firebase.database().ref('/users')
-      .push({ name })
+      .push({ 
+        name,
+        activeTasks: [],
+      })
       .then(() => {
         dispatch({ type: ADD_USER });
       });
@@ -26,5 +30,19 @@ export const fetchUsers = () => {
           payload: snapshot.val() 
         });
       });
+  };
+};
+
+export const addTask = ({ newTaskUser, newTaskDesc, newTaskStreak }) => {
+  return (dispatch) => {
+    firebase.database().ref('/tasks')
+    .push({
+      newTaskUser,
+      newTaskDesc,
+      newTaskStreak,
+    })
+    .then(() => {
+      dispatch({ type: ADD_TASK });
+    });
   };
 };

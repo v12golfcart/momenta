@@ -19,7 +19,7 @@ import { colors } from '../themes';
 /* Components ==================================================================== */
 const mapStateToProps = state => {
   return {
-    newUserName: state.settings.newUserName
+    newUserName: state.user.newUserName
   };
 };
 
@@ -77,7 +77,9 @@ class ModalAddPerson extends Component {
           <Row>
             <CustomInput 
               value={newUserName}
-              onChangeText={this.onChangeName}
+              title="Name"
+              placeholder="Richard Cockburn"
+              onChangeText={this.onChangeDesc}
             />
           </Row>
 

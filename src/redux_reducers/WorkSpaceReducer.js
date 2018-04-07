@@ -1,7 +1,11 @@
-import { USER_FETCH_SUCCESS } from '../redux_actions/types';
+import { 
+  USER_FETCH_SUCCESS,
+  TASK_FETCH_SUCCESS,
+} from '../redux_actions/types';
 
 const INITIAL_STATE = {
   users: {},
+  tasks: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,6 +15,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         users: action.payload,
+      };
+
+    case TASK_FETCH_SUCCESS:
+      return {
+        ...state,
+        tasks: action.payload,
       };
 
     default:

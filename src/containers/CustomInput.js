@@ -19,15 +19,15 @@ const mapStateToProps = state => {
 /* Components ==================================================================== */
 class CustomInput extends Component {
   render() {
-    const { value, onChangeText } = this.props;
+    const { value, title, placeholder, onChangeText } = this.props;
     
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Name</Text>
+        <Text style={styles.title}>{title}</Text>
         <TextInput 
           style={styles.textInput}
           value={value}
-          placeholder="Beelzebub McGee, Sr."
+          placeholder={placeholder}
           placeholderTextColor={'rgba(255, 255, 255, 0.24)'}
           autoCorrect={false}
           selectionColor={colors.primary1}
@@ -39,7 +39,9 @@ class CustomInput extends Component {
 }
 
 CustomInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
 };
 

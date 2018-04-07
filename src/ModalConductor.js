@@ -7,9 +7,13 @@ import { connect } from 'react-redux';
 
 // components
 import ModalAddPerson from './containers/ModalAddPerson';
+import ModalAddTask from './containers/ModalAddTask';
 
 // other
-import { MODAL_ADD_PERSON } from './redux_actions/types';
+import { 
+  MODAL_ADD_PERSON, 
+  MODAL_ADD_TASK,
+} from './redux_actions/types';
 
 /* Redux ==================================================================== */
 const mapStateToProps = state => {
@@ -26,6 +30,13 @@ class ModalConductor extends Component {
       case MODAL_ADD_PERSON:
         return (
           <ModalAddPerson 
+            isModalVisible={isModalVisible}
+          />
+        );
+
+      case MODAL_ADD_TASK:
+        return (
+          <ModalAddTask
             isModalVisible={isModalVisible}
           />
         );

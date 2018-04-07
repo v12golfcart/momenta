@@ -10,7 +10,7 @@ import * as Actions from '../redux_actions';
 
 // components
 import DailyHabitCard from './DailyHabitCard';
-import { Header } from '../components';
+import Header from './Header';
 
 // other
 import { colors } from '../themes';
