@@ -33,13 +33,14 @@ export const fetchUsers = () => {
   };
 };
 
-export const addTask = ({ newTaskUser, newTaskDesc, newTaskStreak }) => {
+export const addTask = ({ newTaskUser, newTaskDesc, newTaskStreak, isDoneToday }) => {
   return (dispatch) => {
     firebase.database().ref('/tasks')
     .push({
       newTaskUser,
       newTaskDesc,
       newTaskStreak,
+      isDoneToday,
     })
     .then(() => {
       dispatch({ type: ADD_TASK });

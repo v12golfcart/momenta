@@ -67,6 +67,7 @@ class ModalAddTask extends Component {
       newTaskUser: newTaskUserFixed, 
       newTaskDesc, 
       newTaskStreak,
+      isDoneToday: false,
     });
   }
 
