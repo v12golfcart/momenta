@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { 
   ADD_USER,
   USER_FETCH_SUCCESS,
+  TASK_FETCH_SUCCESS,
   ADD_TASK,
 } from './types';
 
@@ -33,28 +34,35 @@ export const fetchUsers = () => {
   };
 };
 
-export const addTask = ({ newTaskUserId, newTaskDesc, newTaskStreak, isDoneToday }) => {
+export const addTask = ({ taskUserId, taskDesc, taskStreak }) => {
   const db = firebase.database();
 
   return (dispatch) => {
     const newTaskRef = db.ref('/tasks').push();
     newTaskRef.set({
-      newTaskUserId,
-      newTaskDesc,
-      newTaskStreak,
-      isDoneToday,
+      taskUserId,
+      taskDesc,
+      taskStreak,
     })
-    .then(() => {
+    .then(() => {      
       dispatch({ type: ADD_TASK });
-    })
-    .then(() => {
-
     });
   };
 };
 
-// good resource: https://www.youtube.com/watch?v=sKFLI5FOOHs
+export const fetchTasks = () => {
+  return (dispatch) => {
+    firebase.database().ref('/tasks')
+      .on('value', snapshot => {
+        dispatch({ 
+          type: TASK_FETCH_SUCCESS,
+          payload: snapshot.val() 
+        });
+      });
+  };
+};
 
+// good resource: https://www.youtube.com/watch?v=sKFLI5FOOHs
 export const testQuery = () => {
   const db = firebase.database();
   

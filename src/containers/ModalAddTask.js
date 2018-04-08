@@ -31,9 +31,9 @@ const mapStateToProps = state => {
   
   return {
     arrayOfUsers,
-    newTaskDesc: state.task.newTaskDesc,
-    newTaskUserId: state.task.newTaskUserId,
-    newTaskStreak: state.task.newTaskStreak,
+    taskDesc: state.task.taskDesc,
+    taskUserId: state.task.taskUserId,
+    taskStreak: state.task.taskStreak,
   };
 };
 
@@ -61,13 +61,13 @@ class ModalAddTask extends Component {
   }
 
   onPressAddTask = () => {
-    const { addTask, arrayOfUsers, newTaskUserId, newTaskDesc, newTaskStreak } = this.props;
+    const { addTask, arrayOfUsers, taskUserId, taskDesc, taskStreak } = this.props;
 
-    const newTaskUserIdFixed = newTaskUserId === '' ? arrayOfUsers[0].uid : newTaskUserId;
+    const taskUserIdFixed = taskUserId === '' ? arrayOfUsers[0].uid : taskUserId;
     addTask({ 
-      newTaskUserId: newTaskUserIdFixed, 
-      newTaskDesc, 
-      newTaskStreak,
+      taskUserId: taskUserIdFixed, 
+      taskDesc, 
+      taskStreak,
       isDoneToday: false,
     });
   }
@@ -83,7 +83,7 @@ class ModalAddTask extends Component {
   }
 
   render() {
-    const { testQuery, isModalVisible, newTaskUserId, newTaskDesc, newTaskStreak } = this.props;
+    const { isModalVisible, taskUserId, taskDesc, taskStreak } = this.props;
     console.log('props', this.props)
     return (
       <Modal
@@ -113,7 +113,7 @@ class ModalAddTask extends Component {
             additionalStyles={styles.pickerRow}
           >
             <Picker
-              selectedValue={newTaskUserId}
+              selectedValue={taskUserId}
               onValueChange={this.onChangeUser}
               style={styles.picker}
               itemStyle={styles.pickerItem}
@@ -124,7 +124,7 @@ class ModalAddTask extends Component {
 
           <Row>
             <CustomInput 
-              value={newTaskDesc}
+              value={taskDesc}
               title="Description"
               placeholder="Do a thing"
               onChangeText={this.onChangeDesc}
@@ -133,7 +133,7 @@ class ModalAddTask extends Component {
 
           <Row>
             <CustomInput 
-              value={newTaskStreak}
+              value={taskStreak}
               title="Existing streak (optional)"
               placeholder="0"
               onChangeText={this.onChangeStreak}
@@ -148,16 +148,6 @@ class ModalAddTask extends Component {
             </Button>            
           </Row>
 
-          <Row>
-            <Button
-              onPressButton={() => {
-                testQuery();
-              }}
-            >
-              Add
-            </Button>            
-          </Row>
-
         </Card>
       </Modal>
     );
@@ -167,9 +157,9 @@ class ModalAddTask extends Component {
 ModalAddTask.propTypes = {
   isModalVisible: PropTypes.bool.isRequired,   
   arrayOfUsers: PropTypes.array.isRequired,
-  newTaskDesc: PropTypes.string.isRequired,
-  newTaskUserId: PropTypes.string.isRequired,
-  newTaskStreak: PropTypes.string.isRequired,
+  taskDesc: PropTypes.string.isRequired,
+  taskUserId: PropTypes.string.isRequired,
+  taskStreak: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired, 
   editTaskDesc: PropTypes.func.isRequired,
   editTaskUserId: PropTypes.func.isRequired,

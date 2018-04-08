@@ -6,9 +6,9 @@ import {
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
-  newTaskDesc: '',
-  newTaskUserId: '',
-  newTaskStreak: '0',
+  taskDesc: '',
+  taskUserId: '',
+  taskStreak: '0',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,19 +17,19 @@ export default (state = INITIAL_STATE, action) => {
     case EDIT_TASK_DESC:
       return {
         ...state,
-        newTaskDesc: action.payload,
+        taskDesc: action.payload,
       };
 
     case EDIT_TASK_USER:
       return {
         ...state,
-        newTaskUserId: action.payload,
+        taskUserId: action.payload,
       };
 
     case EDIT_TASK_STREAK:
       return {
         ...state,
-        newTaskStreak: action.payload,
+        taskStreak: action.payload,
       };
 
     case ADD_TASK:

@@ -19,23 +19,32 @@ import { colors } from '../themes';
 const mapStateToProps = state => {
   return {
     miscUi: state.miscUi,
-    users: state.workspace.users || {}
+    users: state.workspace.users || {},
+    tasks: state.workspace.tasks || {},
   };
 };
 
 const mapDispatchToProps = {
   fetchUsers: Actions.fetchUsers,
+  fetchTasks: Actions.fetchTasks,
 };
 
 /* Components ==================================================================== */
 class PageMain extends Component {  
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      userTasks: {}
+    };
+  }
+
   componentWillMount() {
     this.props.fetchUsers();
+    this.props.fetchTasks();
   }
 
   renderUsers = () => {
-    const { users } = this.props;
+    const { users, tasks } = this.props;
 
     const arrayOfUsers = _.map(users, (val, uid) => {
       return { uid, ...val };
@@ -45,6 +54,8 @@ class PageMain extends Component {
       return (
         <DailyHabitCard
           user={user}
+          users={users}
+          tasks={tasks}
           key={user.uid}
         />
       );
@@ -63,7 +74,9 @@ class PageMain extends Component {
 
 PageMain.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
+  fetchTasks: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired,
   miscUi: PropTypes.object,
 };
 
