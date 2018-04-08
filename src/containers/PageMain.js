@@ -27,20 +27,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchUsers: Actions.fetchUsers,
   fetchTasks: Actions.fetchTasks,
+  fetchResolves: Actions.fetchResolves,
 };
 
 /* Components ==================================================================== */
 class PageMain extends Component {  
-  constructor(props) {
-    super(props);
-    this.state = {
-      userTasks: {}
-    };
-  }
 
   componentWillMount() {
     this.props.fetchUsers();
     this.props.fetchTasks();
+    this.props.fetchResolves();
   }
 
   renderUsers = () => {

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 // components
 import { Row } from './Row';
@@ -18,17 +19,24 @@ import { colors } from '../themes';
 /* Components ==================================================================== */
 
 class Daily extends Component {
+
+  onPressToggleHotspot = () => {
+    const { task, toggleTask, binaryIsResolved } = this.props;
+    const tsToday = moment().format('YYYYMMDD');
+
+    toggleTask(task.tid, tsToday, binaryIsResolved);
+  }
   
   getStyles = (mainStyle, resolvedStyle) => {
-    const { isResolved } = this.props;
+    const { binaryIsResolved } = this.props;
 
     const stylesToUse = [mainStyle];
-    if (isResolved) { stylesToUse.push(resolvedStyle); }
+    if (binaryIsResolved) { stylesToUse.push(resolvedStyle); }
     return stylesToUse;
   };
 
   render() {
-    const { description } = this.props;
+    const { task } = this.props;
 
     return (
       <Row>
@@ -36,7 +44,7 @@ class Daily extends Component {
 
           <TouchableOpacity 
             style={styles.wrapperHotSpot}
-            onPress={() => console.log('resolver')}
+            onPress={this.onPressToggleHotspot}
           >
             <View style={this.getStyles(styles.hotspotCircle, styles.hotspotCircleResolved)}>
               <View style={this.getStyles(styles.hotspotBorder, styles.hotspotBorderResolved)}>
@@ -49,11 +57,11 @@ class Daily extends Component {
           </TouchableOpacity>
 
           <View style={styles.wrapperStreak}>
-            <Text style={styles.streak}>3</Text>
+            <Text style={styles.streak}>{task.taskStreak}</Text>
           </View>
 
           <View style={styles.wrapperText}>
-            <Text style={styles.text}>{description}</Text>
+            <Text style={styles.text}>{task.taskDesc}</Text>
           </View>
 
         </View>
@@ -63,8 +71,13 @@ class Daily extends Component {
 }
 
 Daily.propTypes = {
-  isResolved: PropTypes.bool,
-  description: PropTypes.string,
+  task: PropTypes.shape({
+    taskDesc: PropTypes.string,
+    taskStreak: PropTypes.string,
+    taskUserId: PropTypes.string,
+  }),
+  binaryIsResolved: PropTypes.number,
+  toggleTask: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */

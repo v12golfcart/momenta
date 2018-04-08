@@ -6,7 +6,9 @@ import {
   ADD_USER,
   USER_FETCH_SUCCESS,
   TASK_FETCH_SUCCESS,
+  RESOLVES_FETCH_SUCCESS,
   ADD_TASK,
+  TOGGLE_TASK,
 } from './types';
 
 export const addUser = ({ name }) => {
@@ -51,12 +53,43 @@ export const addTask = ({ taskUserId, taskDesc, taskStreak }) => {
 };
 
 export const fetchTasks = () => {
+  const db = firebase.database();
+
   return (dispatch) => {
-    firebase.database().ref('/tasks')
+    db.ref('/tasks')
       .on('value', snapshot => {
         dispatch({ 
           type: TASK_FETCH_SUCCESS,
           payload: snapshot.val() 
+        });
+      });
+  };
+};
+
+export const toggleTask = (taskId, timestamp, binaryIsResolved) => {
+  const db = firebase.database();
+
+  return (dispatch) => {
+    const todayResolveRef = db.ref(`/resolves/${timestamp}/${taskId}`);
+    const newResolveValue = Math.abs(binaryIsResolved - 1);
+
+    todayResolveRef.set({ binaryIsResolved: newResolveValue })
+      .then(() => dispatch({ type: TOGGLE_TASK }));
+  };
+};
+
+export const fetchResolves = () => {
+  const db = firebase.database();
+
+  return (dispatch) => {
+    const resolvedRef = db.ref('/resolves');
+    resolvedRef
+      .limitToLast(2)
+      .on('value', snapshot => {
+        console.log('resolves fetch', snapshot.val());
+        dispatch({
+          type: RESOLVES_FETCH_SUCCESS,
+          payload: snapshot.val(),
         });
       });
   };
