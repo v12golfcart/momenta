@@ -32,7 +32,7 @@ const mapStateToProps = state => {
   return {
     arrayOfUsers,
     newTaskDesc: state.task.newTaskDesc,
-    newTaskUser: state.task.newTaskUser,
+    newTaskUserId: state.task.newTaskUserId,
     newTaskStreak: state.task.newTaskStreak,
   };
 };
@@ -40,16 +40,17 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   closeModal: Actions.closeModal,
   editTaskDesc: Actions.editTaskDesc,
-  editTaskUser: Actions.editTaskUser,
+  editTaskUserId: Actions.editTaskUserId,
   editTaskStreak: Actions.editTaskStreak,
   addTask: Actions.addTask,
+  testQuery: Actions.testQuery,
 };
 
 /* Components ==================================================================== */
 class ModalAddTask extends Component {  
   
   onChangeDesc = text => this.props.editTaskDesc(text);
-  onChangeUser = userId => this.props.editTaskUser(userId);
+  onChangeUser = userId => this.props.editTaskUserId(userId);
   onChangeStreak = num => this.props.editTaskStreak(num);
 
   onCloseHandler = () => {
@@ -60,11 +61,11 @@ class ModalAddTask extends Component {
   }
 
   onPressAddTask = () => {
-    const { addTask, arrayOfUsers, newTaskUser, newTaskDesc, newTaskStreak } = this.props;
+    const { addTask, arrayOfUsers, newTaskUserId, newTaskDesc, newTaskStreak } = this.props;
 
-    const newTaskUserFixed = newTaskUser === '' ? arrayOfUsers[0].uid : newTaskUser;
+    const newTaskUserIdFixed = newTaskUserId === '' ? arrayOfUsers[0].uid : newTaskUserId;
     addTask({ 
-      newTaskUser: newTaskUserFixed, 
+      newTaskUserId: newTaskUserIdFixed, 
       newTaskDesc, 
       newTaskStreak,
       isDoneToday: false,
@@ -82,8 +83,8 @@ class ModalAddTask extends Component {
   }
 
   render() {
-    const { isModalVisible, newTaskUser, newTaskDesc, newTaskStreak } = this.props;
-    
+    const { testQuery, isModalVisible, newTaskUserId, newTaskDesc, newTaskStreak } = this.props;
+    console.log('props', this.props)
     return (
       <Modal
         isVisible={isModalVisible}
@@ -112,7 +113,7 @@ class ModalAddTask extends Component {
             additionalStyles={styles.pickerRow}
           >
             <Picker
-              selectedValue={newTaskUser}
+              selectedValue={newTaskUserId}
               onValueChange={this.onChangeUser}
               style={styles.picker}
               itemStyle={styles.pickerItem}
@@ -147,6 +148,16 @@ class ModalAddTask extends Component {
             </Button>            
           </Row>
 
+          <Row>
+            <Button
+              onPressButton={() => {
+                testQuery();
+              }}
+            >
+              Add
+            </Button>            
+          </Row>
+
         </Card>
       </Modal>
     );
@@ -157,11 +168,11 @@ ModalAddTask.propTypes = {
   isModalVisible: PropTypes.bool.isRequired,   
   arrayOfUsers: PropTypes.array.isRequired,
   newTaskDesc: PropTypes.string.isRequired,
-  newTaskUser: PropTypes.string.isRequired,
+  newTaskUserId: PropTypes.string.isRequired,
   newTaskStreak: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired, 
   editTaskDesc: PropTypes.func.isRequired,
-  editTaskUser: PropTypes.func.isRequired,
+  editTaskUserId: PropTypes.func.isRequired,
   editTaskStreak: PropTypes.func.isRequired,
   addTask: PropTypes.func.isRequired,
 };

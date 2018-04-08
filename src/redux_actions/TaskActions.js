@@ -12,10 +12,10 @@ export const editTaskDesc = (newDesc) => {
   };
 };
 
-export const editTaskUser = (user) => {
+export const editTaskUserId = (userId) => {
   return {
     type: EDIT_TASK_USER,
-    payload: user,
+    payload: userId,
   };
 };
 

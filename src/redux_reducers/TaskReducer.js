@@ -7,7 +7,7 @@ import {
 
 const INITIAL_STATE = {
   newTaskDesc: '',
-  newTaskUser: '',
+  newTaskUserId: '',
   newTaskStreak: '0',
 };
 
@@ -23,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
     case EDIT_TASK_USER:
       return {
         ...state,
-        newTaskUser: action.payload,
+        newTaskUserId: action.payload,
       };
 
     case EDIT_TASK_STREAK:

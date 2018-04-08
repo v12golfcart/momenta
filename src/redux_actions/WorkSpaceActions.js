@@ -10,14 +10,14 @@ import {
 
 export const addUser = ({ name }) => {
   return (dispatch) => {
-    firebase.database().ref('/users')
-      .push({ 
-        name,
-        activeTasks: [],
-      })
-      .then(() => {
-        dispatch({ type: ADD_USER });
-      });
+    const newUserRef = firebase.database().ref('/users').push();
+    newUserRef.set({ 
+      name,
+      activeTasks: [],
+    })
+    .then(() => {
+      dispatch({ type: ADD_USER });
+    });
   };
 };
 
@@ -33,17 +33,38 @@ export const fetchUsers = () => {
   };
 };
 
-export const addTask = ({ newTaskUser, newTaskDesc, newTaskStreak, isDoneToday }) => {
+export const addTask = ({ newTaskUserId, newTaskDesc, newTaskStreak, isDoneToday }) => {
+  const db = firebase.database();
+
   return (dispatch) => {
-    firebase.database().ref('/tasks')
-    .push({
-      newTaskUser,
+    const newTaskRef = db.ref('/tasks').push();
+    newTaskRef.set({
+      newTaskUserId,
       newTaskDesc,
       newTaskStreak,
       isDoneToday,
     })
     .then(() => {
       dispatch({ type: ADD_TASK });
+    })
+    .then(() => {
+
     });
+  };
+};
+
+// good resource: https://www.youtube.com/watch?v=sKFLI5FOOHs
+
+export const testQuery = () => {
+  const db = firebase.database();
+  
+  return (dispatch) => {
+    const testRef = db.ref();
+    testRef
+      .child('users')
+      .orderByChild('name')
+      .equalTo('Chris Ramesh')
+      .on('value', snap => console.log(snap.val()));
+    dispatch({ type: 'LOL' });
   };
 };
