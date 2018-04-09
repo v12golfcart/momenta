@@ -18,8 +18,13 @@ import { colors } from '../themes';
 /* Redux ==================================================================== */
 const mapStateToProps = state => {
   const today = moment().format('YYYYMMDD');
+  let resolvedToday = {};
+  if (state.task.resolved) { 
+    resolvedToday = state.task.resolved[today] || {};
+  }
+
   return {
-    resolvedToday: state.workspace.resolved[today] || {}
+    resolvedToday,
   };
 };
 

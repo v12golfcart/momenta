@@ -1,10 +1,12 @@
 import { 
   EDIT_USER_NAME,
   ADD_USER,
+  USER_FETCH_SUCCESS,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
-  newUserName: ''
+  newUserName: '',
+  users: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,7 +20,14 @@ export default (state = INITIAL_STATE, action) => {
 
     case ADD_USER:
       return {
-        ...INITIAL_STATE,
+        ...state,
+        newUserName: '',
+      };
+
+    case USER_FETCH_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
       };
 
     default:

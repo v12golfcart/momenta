@@ -19,8 +19,8 @@ import { colors } from '../themes';
 const mapStateToProps = state => {
   return {
     miscUi: state.miscUi,
-    users: state.workspace.users || {},
-    tasks: state.workspace.tasks || {},
+    users: state.user.users,
+    tasks: state.task.tasks || {},
   };
 };
 

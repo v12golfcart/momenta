@@ -1,6 +1,6 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -19,7 +19,7 @@ import { MODAL_ADD_PERSON } from '../redux_actions/types';
 /* Redux ==================================================================== */
 const mapSateToProps = state => {
   return {
-    users: state.workspace.users
+    users: state.user.users
   };
 };
 
@@ -71,6 +71,11 @@ class SettingsPeopleCard extends Component {
     );
   }
 }
+
+SettingsPeopleCard.propTypes = {
+  users: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({

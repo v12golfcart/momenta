@@ -25,15 +25,15 @@ import { colors } from '../themes';
 
 /* Components ==================================================================== */
 const mapStateToProps = state => {
-  const arrayOfUsers = _.map(state.workspace.users, (val, uid) => {
+  const arrayOfUsers = _.map(state.user.users, (val, uid) => {
     return { uid, ...val };
   });
   
   return {
     arrayOfUsers,
-    taskDesc: state.task.taskDesc,
-    taskUserId: state.task.taskUserId,
-    taskStreak: state.task.taskStreak,
+    taskDesc: state.task.newTask.taskDesc,
+    taskUserId: state.task.newTask.taskUserId,
+    taskStreak: state.task.newTask.taskStreak,
   };
 };
 
