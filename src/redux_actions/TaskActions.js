@@ -63,14 +63,12 @@ export const fetchTasks = () => {
   };
 };
 
-export const toggleTask = (taskId, timestamp, binaryIsResolved) => {
+export const toggleTask = (taskId, timestamp, newBinaryIsResolved) => {
   const db = firebase.database();
 
   return (dispatch) => {
     const todayResolveRef = db.ref(`/resolves/${timestamp}/${taskId}`);
-    const newResolveValue = Math.abs(binaryIsResolved - 1);
-
-    todayResolveRef.set({ binaryIsResolved: newResolveValue })
+    todayResolveRef.set({ binaryIsResolved: newBinaryIsResolved })
       .then(() => dispatch({ type: TOGGLE_TASK }));
   };
 };
@@ -83,7 +81,6 @@ export const fetchResolves = () => {
     resolvedRef
       .limitToLast(2)
       .on('value', snapshot => {
-        console.log('resolves fetch', snapshot.val());
         dispatch({
           type: RESOLVES_FETCH_SUCCESS,
           payload: snapshot.val(),

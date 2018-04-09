@@ -4,7 +4,6 @@ import { StyleSheet, Text, } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 // redux
 import * as Actions from '../redux_actions';
@@ -17,14 +16,14 @@ import { colors } from '../themes';
 
 /* Redux ==================================================================== */
 const mapStateToProps = state => {
-  const today = moment().format('YYYYMMDD');
   let resolvedToday = {};
   if (state.task.resolved) { 
-    resolvedToday = state.task.resolved[today] || {};
+    resolvedToday = state.task.resolved[state.workspace.dates.today] || {};
   }
 
   return {
     resolvedToday,
+    dates: state.workspace.dates,
   };
 };
 
@@ -36,7 +35,7 @@ const mapDispatchToProps = {
 class DailyHabitCard extends Component {
 
   renderDailies = () => {
-    const { user, tasks, toggleTask, resolvedToday } = this.props;
+    const { user, tasks, dates, toggleTask, resolvedToday } = this.props;
 
     const arrayOfTasks = _.map(tasks, (val, tid) => {
       return { tid, ...val };
@@ -51,6 +50,7 @@ class DailyHabitCard extends Component {
       return (
         <Daily 
           task={task}
+          dates={dates}
           binaryIsResolved={binaryIsResolved}
           key={task.tid}
           toggleTask={toggleTask}
@@ -62,7 +62,6 @@ class DailyHabitCard extends Component {
   render() {
     const { user } = this.props;
     this.renderDailies();
-    console.log('habit card props', this.props);
 
     return (
       <Card>
@@ -81,7 +80,8 @@ class DailyHabitCard extends Component {
 DailyHabitCard.propTypes = {
   user: PropTypes.object,
   users: PropTypes.object.isRequired,
-  tasks: PropTypes.object.isRequired, 
+  tasks: PropTypes.object.isRequired,
+  dates: PropTypes.object.isRequired, 
   toggleTask: PropTypes.func.isRequired, 
 };
 

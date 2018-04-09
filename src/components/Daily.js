@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 // components
 import { Row } from './Row';
@@ -21,10 +20,9 @@ import { colors } from '../themes';
 class Daily extends Component {
 
   onPressToggleHotspot = () => {
-    const { task, toggleTask, binaryIsResolved } = this.props;
-    const tsToday = moment().format('YYYYMMDD');
+    const { task, dates, toggleTask, binaryIsResolved } = this.props;
 
-    toggleTask(task.tid, tsToday, binaryIsResolved);
+    toggleTask(task.tid, dates.today, Math.abs(binaryIsResolved - 1));
   }
   
   getStyles = (mainStyle, resolvedStyle) => {
@@ -76,6 +74,7 @@ Daily.propTypes = {
     taskStreak: PropTypes.string,
     taskUserId: PropTypes.string,
   }),
+  dates: PropTypes.object.isRequired,
   binaryIsResolved: PropTypes.number,
   toggleTask: PropTypes.func.isRequired,
 };
