@@ -1,6 +1,6 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -35,6 +35,12 @@ const mapDispatchToProps = {
 
 /* Components ==================================================================== */
 class PageMain extends Component {  
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    };
+  }
 
   componentWillMount() {
     this.props.fetchUsers();
@@ -47,7 +53,7 @@ class PageMain extends Component {
 
     const todayTest = moment().format('YYYYMMDD');
     if (todayTest !== dates.today) {
-      updateDates();
+      //updateDates();
     }
   }
 
@@ -72,10 +78,20 @@ class PageMain extends Component {
   }
 
   render() {
+    const { dates } = this.props;
+    let counter = 1;
     return (
       <View style={styles.container}>
         <Header />
         {this.renderUsers()}
+        <TouchableHighlight
+          onPress={() => {
+            this.props.updateDates(this.state.counter);
+            this.setState({ counter: this.state.counter + 1 });
+          }}
+        >
+          <Text style={{ color: 'white' }}>Sup</Text>
+        </TouchableHighlight>
       </View>
     );
   }

@@ -10,6 +10,7 @@ import {
   RESOLVES_FETCH_SUCCESS,
   ADD_TASK,
   TOGGLE_TASK,
+  UPDATE_DAILY_STREAK,
 } from './types';
 
 export const editTaskDesc = (newDesc) => {
@@ -71,6 +72,16 @@ export const toggleTask = (taskId, timestamp, newBinaryIsResolved) => {
     todayResolveRef.set({ binaryIsResolved: newBinaryIsResolved })
       .then(() => dispatch({ type: TOGGLE_TASK }));
   };
+};
+
+export const updateDailyStreak = (taskId, newStreak) => {
+  const db = firebase.database();
+
+  return (dispatch) => {
+    const taskRef = db.ref(`/tasks/${taskId}`);
+    taskRef.update({ taskStreak: newStreak })
+      .then(() => dispatch({ type: UPDATE_DAILY_STREAK }));
+  };  
 };
 
 export const fetchResolves = () => {

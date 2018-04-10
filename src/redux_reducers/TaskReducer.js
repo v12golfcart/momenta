@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   newTask: {
     taskDesc: '',
     taskUserId: '',
-    taskStreak: '0',
+    taskStreak: 0,
   },
   tasks: {},
   resolved: {}  

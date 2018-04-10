@@ -20,9 +20,12 @@ import { colors } from '../themes';
 class Daily extends Component {
 
   onPressToggleHotspot = () => {
-    const { task, dates, toggleTask, binaryIsResolved } = this.props;
+    const { task, dates, toggleTask, binaryIsResolved, updateDailyStreak} = this.props;
+    const taskId = task.tid;
+    const newStreak = binaryIsResolved === 0 ? task.taskStreak + 1 : task.taskStreak - 1;
 
-    toggleTask(task.tid, dates.today, Math.abs(binaryIsResolved - 1));
+    toggleTask(taskId, dates.today, Math.abs(binaryIsResolved - 1));
+    updateDailyStreak(taskId, newStreak);
   }
   
   getStyles = (mainStyle, resolvedStyle) => {
@@ -71,12 +74,16 @@ class Daily extends Component {
 Daily.propTypes = {
   task: PropTypes.shape({
     taskDesc: PropTypes.string,
-    taskStreak: PropTypes.string,
+    taskStreak: PropTypes.number,
     taskUserId: PropTypes.string,
   }),
+  tasks: PropTypes.object.isRequired,
   dates: PropTypes.object.isRequired,
+  resolvedToday: PropTypes.object.isRequired,
+  resolvedYesterday: PropTypes.object.isRequired,
   binaryIsResolved: PropTypes.number,
   toggleTask: PropTypes.func.isRequired,
+  updateDailyStreak: PropTypes.func.isRequired,  
 };
 
 /* Styles ==================================================================== */

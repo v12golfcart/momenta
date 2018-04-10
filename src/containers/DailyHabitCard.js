@@ -17,25 +17,37 @@ import { colors } from '../themes';
 /* Redux ==================================================================== */
 const mapStateToProps = state => {
   let resolvedToday = {};
+  let resolvedYesterday = {};
   if (state.task.resolved) { 
     resolvedToday = state.task.resolved[state.workspace.dates.today] || {};
+    resolvedYesterday = state.task.resolved[state.workspace.dates.resolvedYesterday] || {};
   }
 
   return {
     resolvedToday,
+    resolvedYesterday,
     dates: state.workspace.dates,
   };
 };
 
 const mapDispatchToProps = {
   toggleTask: Actions.toggleTask,
+  updateDailyStreak: Actions.updateDailyStreak,
 };
 
 /* Components ==================================================================== */
 class DailyHabitCard extends Component {
 
   renderDailies = () => {
-    const { user, tasks, dates, toggleTask, resolvedToday } = this.props;
+    const { 
+      user, 
+      tasks, 
+      dates, 
+      toggleTask, 
+      resolvedToday, 
+      resolvedYesterday, 
+      updateDailyStreak 
+    } = this.props;
 
     const arrayOfTasks = _.map(tasks, (val, tid) => {
       return { tid, ...val };
@@ -50,10 +62,14 @@ class DailyHabitCard extends Component {
       return (
         <Daily 
           task={task}
+          tasks={tasks}
+          resolvedToday={resolvedToday}
+          resolvedYesterday={resolvedYesterday}
           dates={dates}
           binaryIsResolved={binaryIsResolved}
           key={task.tid}
           toggleTask={toggleTask}
+          updateDailyStreak={updateDailyStreak}
         />
       );
     });
@@ -82,7 +98,10 @@ DailyHabitCard.propTypes = {
   users: PropTypes.object.isRequired,
   tasks: PropTypes.object.isRequired,
   dates: PropTypes.object.isRequired, 
+  resolvedToday: PropTypes.object.isRequired,
+  resolvedYesterday: PropTypes.object.isRequired,
   toggleTask: PropTypes.func.isRequired, 
+  updateDailyStreak: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */
