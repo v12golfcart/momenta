@@ -15,21 +15,6 @@ import { Card, Row, Daily } from '../components';
 import { colors } from '../themes';
 
 /* Redux ==================================================================== */
-const mapStateToProps = state => {
-  let resolvedToday = {};
-  let resolvedYesterday = {};
-  if (state.task.resolved) { 
-    resolvedToday = state.task.resolved[state.workspace.dates.today] || {};
-    resolvedYesterday = state.task.resolved[state.workspace.dates.resolvedYesterday] || {};
-  }
-
-  return {
-    resolvedToday,
-    resolvedYesterday,
-    dates: state.workspace.dates,
-  };
-};
-
 const mapDispatchToProps = {
   toggleTask: Actions.toggleTask,
   updateDailyStreak: Actions.updateDailyStreak,
@@ -43,9 +28,8 @@ class DailyHabitCard extends Component {
       user, 
       tasks, 
       dates, 
+      resolved,
       toggleTask, 
-      resolvedToday, 
-      resolvedYesterday, 
       updateDailyStreak 
     } = this.props;
 
@@ -55,16 +39,16 @@ class DailyHabitCard extends Component {
     const userTasks = arrayOfTasks.filter(task => user.uid === task.taskUserId);
     
     return userTasks.map(task => {
-      const binaryIsResolved = resolvedToday[task.tid] ? 
-        resolvedToday[task.tid].binaryIsResolved : 
-        0;
+      let binaryIsResolved = 0;
+      if (resolved[dates.today] && resolved[dates.today][task.tid]) {
+        binaryIsResolved = resolved[dates.today][task.tid].binaryIsResolved;
+      }
 
       return (
         <Daily 
           task={task}
           tasks={tasks}
-          resolvedToday={resolvedToday}
-          resolvedYesterday={resolvedYesterday}
+          resolved={resolved}
           dates={dates}
           binaryIsResolved={binaryIsResolved}
           key={task.tid}
@@ -98,8 +82,7 @@ DailyHabitCard.propTypes = {
   users: PropTypes.object.isRequired,
   tasks: PropTypes.object.isRequired,
   dates: PropTypes.object.isRequired, 
-  resolvedToday: PropTypes.object.isRequired,
-  resolvedYesterday: PropTypes.object.isRequired,
+  resolved: PropTypes.object.isRequired,
   toggleTask: PropTypes.func.isRequired, 
   updateDailyStreak: PropTypes.func.isRequired,
 };
@@ -116,4 +99,4 @@ const styles = StyleSheet.create({
 });
 
 /* Export ==================================================================== */
-export default connect(mapStateToProps, mapDispatchToProps)(DailyHabitCard);
+export default connect(null, mapDispatchToProps)(DailyHabitCard);

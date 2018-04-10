@@ -19,7 +19,7 @@ import { MODAL_ADD_PERSON } from '../redux_actions/types';
 /* Redux ==================================================================== */
 const mapSateToProps = state => {
   return {
-    users: state.user.users
+    users: state.user.users || {},
   };
 };
 

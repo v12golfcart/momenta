@@ -7,7 +7,7 @@ import {
   EDIT_TASK_USER,
   EDIT_TASK_STREAK,  
   TASK_FETCH_SUCCESS,
-  RESOLVES_FETCH_SUCCESS,
+  RESOLVED_FETCH_SUCCESS,
   ADD_TASK,
   TOGGLE_TASK,
   UPDATE_DAILY_STREAK,
@@ -30,7 +30,7 @@ export const editTaskUserId = (userId) => {
 export const editTaskStreak = (num) => {
   return {
     type: EDIT_TASK_STREAK,
-    payload: num,
+    payload: num.toString(),
   };
 };
 
@@ -68,7 +68,7 @@ export const toggleTask = (taskId, timestamp, newBinaryIsResolved) => {
   const db = firebase.database();
 
   return (dispatch) => {
-    const todayResolveRef = db.ref(`/resolves/${timestamp}/${taskId}`);
+    const todayResolveRef = db.ref(`/resolved/${timestamp}/${taskId}`);
     todayResolveRef.set({ binaryIsResolved: newBinaryIsResolved })
       .then(() => dispatch({ type: TOGGLE_TASK }));
   };
@@ -84,16 +84,16 @@ export const updateDailyStreak = (taskId, newStreak) => {
   };  
 };
 
-export const fetchResolves = () => {
+export const fetchResolved = () => {
   const db = firebase.database();
 
   return (dispatch) => {
-    const resolvedRef = db.ref('/resolves');
+    const resolvedRef = db.ref('/resolved');
     resolvedRef
-      .limitToLast(2)
+      .limitToLast(3)
       .on('value', snapshot => {
         dispatch({
-          type: RESOLVES_FETCH_SUCCESS,
+          type: RESOLVED_FETCH_SUCCESS,
           payload: snapshot.val(),
         });
       });

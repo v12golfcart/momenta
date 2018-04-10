@@ -67,7 +67,7 @@ class ModalAddTask extends Component {
     addTask({ 
       taskUserId: taskUserIdFixed, 
       taskDesc, 
-      taskStreak,
+      taskStreak: parseInt(taskStreak, 10),
       isDoneToday: false,
     });
   }
@@ -84,7 +84,7 @@ class ModalAddTask extends Component {
 
   render() {
     const { isModalVisible, taskUserId, taskDesc, taskStreak } = this.props;
-    console.log('props', this.props)
+
     return (
       <Modal
         isVisible={isModalVisible}
@@ -137,6 +137,7 @@ class ModalAddTask extends Component {
               title="Existing streak (optional)"
               placeholder="0"
               onChangeText={this.onChangeStreak}
+              keyboardType="numeric"
             />
           </Row>
 
@@ -159,7 +160,7 @@ ModalAddTask.propTypes = {
   arrayOfUsers: PropTypes.array.isRequired,
   taskDesc: PropTypes.string.isRequired,
   taskUserId: PropTypes.string.isRequired,
-  taskStreak: PropTypes.number.isRequired,
+  taskStreak: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired, 
   editTaskDesc: PropTypes.func.isRequired,
   editTaskUserId: PropTypes.func.isRequired,

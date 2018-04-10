@@ -4,14 +4,14 @@ import {
   EDIT_TASK_STREAK,
   ADD_TASK,
   TASK_FETCH_SUCCESS,
-  RESOLVES_FETCH_SUCCESS,  
+  RESOLVED_FETCH_SUCCESS,  
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
   newTask: {
     taskDesc: '',
     taskUserId: '',
-    taskStreak: 0,
+    taskStreak: '0',
   },
   tasks: {},
   resolved: {}  
@@ -59,7 +59,7 @@ export default (state = INITIAL_STATE, action) => {
         tasks: action.payload,
       };
 
-    case RESOLVES_FETCH_SUCCESS:
+    case RESOLVED_FETCH_SUCCESS:
       return {
         ...state,
         resolved: action.payload,

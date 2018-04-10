@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 class CustomInput extends Component {
   render() {
     const { value, title, placeholder, onChangeText } = this.props;
-    
+    const keyboardType = this.props.keyboardType ? this.props.keyboardType : "default";
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
@@ -32,17 +32,19 @@ class CustomInput extends Component {
           autoCorrect={false}
           selectionColor={colors.primary1}
           onChangeText={onChangeText}
+          keyboardType={keyboardType}
+          returnKeyType="done"
         />
       </View>
     );
   }
 }
 
-CustomInput.propTypes = {
-  value: PropTypes.string,
+CustomInput.propTypes = { 
   title: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onChangeText: PropTypes.func.isRequired,
+  keyboardType: PropTypes.string,
 };
 
 /* Styles ==================================================================== */
