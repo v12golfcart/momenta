@@ -1,6 +1,6 @@
 // libraries
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { AppState, StyleSheet, View, } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -41,6 +41,7 @@ class PageMain extends Component {
     super(props);
     this.state = {
       counter: 1,
+      appState: AppState.currentState,
     };
   }
 
@@ -51,8 +52,27 @@ class PageMain extends Component {
     this.props.updateDates();
   }
 
+  componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
   componentWillReceiveProps(props) {
-    const { dates, updateDates, tasks, resolved, updateDailyStreak } = props;
+    this.updateWorkspaceDatesAndStreaks();
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.updateWorkspaceDatesAndStreaks();
+    }
+    this.setState({ appState: nextAppState });
+  }
+
+  updateWorkspaceDatesAndStreaks = () => {
+    const { dates, updateDates, tasks, resolved, updateDailyStreak } = this.props;
 
     const today = moment().format('YYYYMMDD');
     if (today !== dates.today) {
@@ -67,7 +87,7 @@ class PageMain extends Component {
         }
         updateDailyStreak(tid, 0);
       });
-    }
+    }    
   }
 
   renderUsers = () => {

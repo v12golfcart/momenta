@@ -1,5 +1,5 @@
 // libs
-import React, { Component } from 'react';
+import React from 'react';
 import { Scene, Router, Lightbox, Actions } from 'react-native-router-flux';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';

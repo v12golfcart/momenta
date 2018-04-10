@@ -27,7 +27,7 @@ export default class App extends Component<Props> {
   
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk, logger));
-
+    
     return (
       <Provider store={store}>
         <View style={styles.container}>
