@@ -1,4 +1,4 @@
-package com.momentum;
+package com.momenta;
 
 import android.app.Application;
 
