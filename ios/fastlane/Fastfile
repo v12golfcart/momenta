@@ -14,6 +14,14 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    match(
+      type: "development",
+      git_url: "https://github.com/v12golfcart/certificatesMomenta"
+    )
+    match(
+      type: "appstore",
+      git_url: "https://github.com/v12golfcart/certificatesMomenta"
+    )
     increment_build_number(xcodeproj: "momenta.xcodeproj")
     build_app(scheme: "momenta")
     upload_to_testflight
