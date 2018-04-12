@@ -18,10 +18,6 @@ platform :ios do
       type: "development",
       git_url: "https://github.com/v12golfcart/certificatesMomenta"
     )
-    match(
-      type: "appstore",
-      git_url: "https://github.com/v12golfcart/certificatesMomenta"
-    )
     increment_build_number(xcodeproj: "momenta.xcodeproj")
     build_app(scheme: "momenta")
     upload_to_testflight
