@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: 8,
     paddingTop: 8,
-    marginBottom: 32,
+    marginBottom: 16,
     flexDirection: 'row',
   },
   wrapperProgressText: {

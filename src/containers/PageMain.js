@@ -1,6 +1,6 @@
 // libraries
 import React, { Component } from 'react';
-import { AppState, StyleSheet, View, } from 'react-native';
+import { AppState, StyleSheet, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -115,7 +115,9 @@ class PageMain extends Component {
     return (
       <View style={styles.container}>
         <Header />
-        {this.renderUsers()}
+        <ScrollView>
+          {this.renderUsers()}
+        </ScrollView>
         
         {/*
         FOR MESSING WITH DAYS
