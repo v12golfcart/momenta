@@ -42,6 +42,7 @@ class PageMain extends Component {
     this.state = {
       counter: 1,
       appState: AppState.currentState,
+      today: '',
     };
   }
 
@@ -90,6 +91,20 @@ class PageMain extends Component {
     }    
   }
 
+  getCountResolved = () => {
+    const { resolved, dates } = this.props;
+    let countResolved = 0;
+    
+    if (resolved[dates.today]) {
+      countResolved = Object.values(resolved[dates.today]).reduce((acc, val) => {
+        acc += val.binaryIsResolved;
+        return acc;
+      }, 0);
+    }
+
+    return countResolved;
+  }
+
   renderUsers = () => {
     const { users, tasks, dates, resolved } = this.props;
 
@@ -112,9 +127,16 @@ class PageMain extends Component {
   }
 
   render() {
+    const { tasks, } = this.props;
+    const countTasks = Math.max(Object.keys(tasks).length, 1);
+    const countResolved = this.getCountResolved();
+
     return (
       <View style={styles.container}>
-        <Header />
+        <Header 
+          countTasks={countTasks}
+          countResolved={countResolved}
+        />
         <ScrollView>
           {this.renderUsers()}
         </ScrollView>

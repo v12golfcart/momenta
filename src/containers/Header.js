@@ -4,7 +4,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 // redux
 import * as Actions from '../redux_actions';
@@ -14,39 +13,16 @@ import { colors } from '../themes';
 import { MODAL_ADD_TASK } from '../redux_actions/types';
 
 /* Redux ==================================================================== */
-const mapStateToProps = state => {
-  return {
-    tasks: state.task.tasks,
-    resolved: state.task.resolved,
-    dates: state.workspace.dates,
-  };
-};
-
 const mapDispatchToProps = {
   openModal: Actions.openModal,
 };
 
 /* Components ==================================================================== */
 class Header extends Component {
-  getCountResolved = () => {
-    const { resolved } = this.props;
-    const today = moment().format('YYYYMMDD');
-    let countResolved = 0;
-    
-    if (resolved[today]) {
-      countResolved = Object.values(resolved[today]).reduce((acc, val) => {
-        acc += val.binaryIsResolved;
-        return acc;
-      }, 0);
-    }
-
-    return countResolved;
-  }
 
   render() {
-    const { openModal, tasks, dates } = this.props;
-    const countTasks = Math.max(Object.keys(tasks).length, 1);
-    const countResolved = this.getCountResolved();
+    const { openModal, countResolved, countTasks } = this.props;
+    console.log('header props', this.props);
 
     return (
       <View style={styles.container}>
@@ -58,7 +34,7 @@ class Header extends Component {
           backgroundColor="#3d5875"
         >
           {
-            (fill) => (
+            () => (
               <View style={styles.wrapperProgressText}>
                 <Text style={styles.progressTextTitle}>
                   Streak:
@@ -86,9 +62,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  tasks: PropTypes.object.isRequired,
-  resolved: PropTypes.object.isRequired,
-  dates: PropTypes.object.isRequired,
+  countResolved: PropTypes.number.isRequired,
+  countTasks: PropTypes.number.isRequired,
 };
 
 /* Styles ==================================================================== */
@@ -122,4 +97,4 @@ const styles = StyleSheet.create({
 });
 
 /* Export ==================================================================== */
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);
