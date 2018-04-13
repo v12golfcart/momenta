@@ -2,6 +2,7 @@
 export const UI_TOGGLE_TEST = 'UI_TOGGLE_TEST';
 export const MODAL_OPEN = 'MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
+export const IS_LOADING = 'IS_LOADING';
 
 // Modal components
 export const MODAL_ADD_PERSON = 'MODAL_ADD_PERSON';

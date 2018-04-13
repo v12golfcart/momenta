@@ -1,6 +1,11 @@
 // libraries
 import React, { Component } from 'react';
-import { AppState, StyleSheet, View, ScrollView } from 'react-native';
+import { 
+  AppState, 
+  StyleSheet, 
+  View, 
+  ScrollView,
+} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -12,6 +17,7 @@ import * as Actions from '../redux_actions';
 // components
 import DailyHabitCard from './DailyHabitCard';
 import Header from './Header';
+import { Spinner } from '../components';
 
 // other
 import { colors } from '../themes';
@@ -19,10 +25,10 @@ import { colors } from '../themes';
 /* Components ==================================================================== */
 const mapStateToProps = state => {
   return {
-    miscUi: state.miscUi,
+    isLoading: state.miscUi.isLoading.pageMain,
+    dates: state.workspace.dates,    
     users: state.user.users || {},
     tasks: state.task.tasks || {},
-    dates: state.workspace.dates || {},
     resolved: state.task.resolved || {},
   };
 };
@@ -33,6 +39,7 @@ const mapDispatchToProps = {
   fetchResolved: Actions.fetchResolved,
   updateDates: Actions.updateDates,
   updateDailyStreak: Actions.updateDailyStreak,
+  setToLoading: Actions.setToLoading,
 };
 
 /* Components ==================================================================== */
@@ -47,22 +54,37 @@ class PageMain extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUsers();
+    this.props.setToLoading('pageMain');
+    this.props.fetchUsers(); // also sets pageMain loading to true
     this.props.fetchTasks();
     this.props.fetchResolved();
-    this.props.updateDates();
+    this.props.updateDates(); // also sets page main loading to false
   }
 
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {
     this.updateWorkspaceDatesAndStreaks();
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+  getCountResolved = () => {
+    const { resolved, dates } = this.props;
+    let countResolved = 0;
+    
+    if (resolved[dates.today]) {
+      countResolved = Object.values(resolved[dates.today]).reduce((acc, val) => {
+        acc += val.binaryIsResolved;
+        return acc;
+      }, 0);
+    }
+
+    return countResolved;
   }
 
   handleAppStateChange = (nextAppState) => {
@@ -91,20 +113,6 @@ class PageMain extends Component {
     }    
   }
 
-  getCountResolved = () => {
-    const { resolved, dates } = this.props;
-    let countResolved = 0;
-    
-    if (resolved[dates.today]) {
-      countResolved = Object.values(resolved[dates.today]).reduce((acc, val) => {
-        acc += val.binaryIsResolved;
-        return acc;
-      }, 0);
-    }
-
-    return countResolved;
-  }
-
   renderUsers = () => {
     const { users, tasks, dates, resolved } = this.props;
 
@@ -126,6 +134,19 @@ class PageMain extends Component {
     });
   }
 
+  renderSpinner = () => {
+    const { isLoading } = this.props;
+
+    if (isLoading) {
+      return (
+        <Spinner 
+          size="large"
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
     const { tasks, } = this.props;
     const countTasks = Math.max(Object.keys(tasks).length, 1);
@@ -137,9 +158,13 @@ class PageMain extends Component {
           countTasks={countTasks}
           countResolved={countResolved}
         />
-        <ScrollView>
-          {this.renderUsers()}
-        </ScrollView>
+        <View style={styles.wrapperScroll}>
+          {this.renderSpinner()}
+          <ScrollView>
+            {this.renderUsers()}
+          </ScrollView>
+        </View>
+
         
         {/*
         FOR MESSING WITH DAYS
@@ -183,7 +208,8 @@ PageMain.propTypes = {
   tasks: PropTypes.object.isRequired,
   resolved: PropTypes.object.isRequired,
   dates: PropTypes.object.isRequired,
-  miscUi: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired,
+  setToLoading: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */
@@ -192,6 +218,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundDark,
     flex: 1,
     paddingTop: 10,
+  },
+  wrapperScroll: {
+    flex: 1,
   }
 });
 

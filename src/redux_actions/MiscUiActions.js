@@ -3,6 +3,7 @@ import {
   UI_TOGGLE_TEST, 
   MODAL_OPEN,
   MODAL_CLOSE,
+  IS_LOADING,
 } from './types';
 
 export const testToggleUi = () => {
@@ -23,3 +24,10 @@ export const closeModal = () => {
     type: MODAL_CLOSE,
   };
 };
+
+export const setToLoading = (componentName) => {
+  return {
+    type: IS_LOADING,
+    payload: componentName,
+  };
+}

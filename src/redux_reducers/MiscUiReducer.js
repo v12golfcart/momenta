@@ -4,12 +4,17 @@ import {
   MODAL_CLOSE,
   ADD_USER,
   ADD_TASK,
+  IS_LOADING,
+  TASK_FETCH_SUCCESS,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
   testBoolean: false,
   isModalVisible: false,
   modalType: '',
+  isLoading: {
+    pageMain: false,
+  }
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -44,6 +49,25 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isModalVisible: false,
+      };
+
+    // loading
+    case IS_LOADING:
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading,
+          [action.payload]: true,
+        },
+      };
+
+    case TASK_FETCH_SUCCESS: 
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading,
+          pageMain: false,
+        }
       };
 
     default:

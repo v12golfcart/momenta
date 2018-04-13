@@ -15,6 +15,7 @@ export const editUserName = (value) => {
   };
 };
 
+// because this is the first thing called, pageMain loading set to true
 export const addUser = ({ name }) => {
   return (dispatch) => {
     const newUserRef = firebase.database().ref('/users').push();
