@@ -51,7 +51,10 @@ class ModalAddTask extends Component {
   
   onChangeDesc = text => this.props.editTaskDesc(text);
   onChangeUser = userId => this.props.editTaskUserId(userId);
-  onChangeStreak = numStr => this.props.editTaskStreak(parseInt(numStr, 10));
+  onChangeStreak = numStr => {
+    const num = numStr === '' ? 0 : parseInt(numStr, 10);
+    this.props.editTaskStreak(num);
+  }
 
   onCloseHandler = () => {
     const { closeModal, editTaskDesc } = this.props;
