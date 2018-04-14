@@ -57,6 +57,7 @@ class ModalAddPerson extends Component {
         onBackdropPress={this.onCloseHandler}
         animationIn="fadeIn"
         animationOut="fadeOut"
+        avoidKeyboard
       >
         <Card>
           <Row>
