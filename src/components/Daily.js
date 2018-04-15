@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
+import Swipeout from 'react-native-swipeout';
 
 // components
 import { Row } from './Row';
@@ -36,37 +37,61 @@ class Daily extends Component {
     return stylesToUse;
   };
 
+  renderSwipeoutButton = (buttonColor, buttonText) => {
+    return (
+      <View style={[styles.swipeoutButtonWrapper, { backgroundColor: buttonColor }]}>
+        <Text style={styles.swipeoutButtonText}>{buttonText}</Text>
+      </View>
+    );
+  }
+
   render() {
     const { task } = this.props;
+    const swipeoutBtns = [
+      {
+        component: this.renderSwipeoutButton(colors.secondary1, 'Delete'),
+        onPress: () => console.log('sup')
+      },
+      {
+        component: this.renderSwipeoutButton('grey', 'Edit'),
+        onPress: () => console.log('sup')
+      },      
+    ];
 
     return (
-      <Row>
-        <View style={styles.container}>
+      <Swipeout
+        right={swipeoutBtns}
+        backgroundColor="transparent"
+        autoClose
+      >
+        <Row>
+          <View style={styles.container}>
 
-          <TouchableOpacity 
-            style={styles.wrapperHotSpot}
-            onPress={this.onPressToggleHotspot}
-          >
-            <View style={this.getStyles(styles.hotspotCircle, styles.hotspotCircleResolved)}>
-              <View style={this.getStyles(styles.hotspotBorder, styles.hotspotBorderResolved)}>
-                <Icon 
-                  name="done"
-                  style={this.getStyles(styles.hotspotIcon, styles.hotspotIconResolved)} 
-                />
-              </View>
-            </View>        
-          </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.wrapperHotSpot}
+              onPress={this.onPressToggleHotspot}
+            >
+              <View style={this.getStyles(styles.hotspotCircle, styles.hotspotCircleResolved)}>
+                <View style={this.getStyles(styles.hotspotBorder, styles.hotspotBorderResolved)}>
+                  <Icon 
+                    name="done"
+                    style={this.getStyles(styles.hotspotIcon, styles.hotspotIconResolved)} 
+                  />
+                </View>
+              </View>        
+            </TouchableOpacity>
 
-          <View style={styles.wrapperStreak}>
-            <Text style={styles.streak}>{task.taskStreak}</Text>
+            <View style={styles.wrapperStreak}>
+              <Text style={styles.streak}>{task.taskStreak}</Text>
+            </View>
+
+            <View style={styles.wrapperText}>
+              <Text style={styles.text}>{task.taskDesc}</Text>
+            </View>
+
           </View>
-
-          <View style={styles.wrapperText}>
-            <Text style={styles.text}>{task.taskDesc}</Text>
-          </View>
-
-        </View>
-      </Row>
+        </Row>
+      </Swipeout>      
     );
   }
 }
@@ -152,6 +177,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.textMain
   },  
+
+  // swipeout
+  swipeoutButtonWrapper: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }  
 });
 
 /* Export ==================================================================== */
