@@ -28,6 +28,11 @@ class Daily extends Component {
     toggleTask(taskId, dates.today, Math.abs(binaryIsResolved - 1));
     updateDailyStreak(taskId, newStreak);
   }
+
+  onDeleteTask = () => {
+    const { deleteTask, task, dates } = this.props;
+    deleteTask(task.tid, dates.today);
+  }
   
   getStyles = (mainStyle, resolvedStyle) => {
     const { binaryIsResolved } = this.props;
@@ -46,11 +51,11 @@ class Daily extends Component {
   }
 
   render() {
-    const { task } = this.props;
+    const { task, } = this.props;
     const swipeoutBtns = [
       {
         component: this.renderSwipeoutButton(colors.secondary1, 'Delete'),
-        onPress: () => console.log('sup')
+        onPress: this.onDeleteTask,
       },
       {
         component: this.renderSwipeoutButton('grey', 'Edit'),
@@ -98,6 +103,7 @@ class Daily extends Component {
 
 Daily.propTypes = {
   task: PropTypes.shape({
+    tid: PropTypes.string,
     taskDesc: PropTypes.string,
     taskStreak: PropTypes.number,
     taskUserId: PropTypes.string,
@@ -108,6 +114,7 @@ Daily.propTypes = {
   binaryIsResolved: PropTypes.number,
   toggleTask: PropTypes.func.isRequired,
   updateDailyStreak: PropTypes.func.isRequired,  
+  deleteTask: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */

@@ -11,6 +11,7 @@ import {
   ADD_TASK,
   TOGGLE_TASK,
   UPDATE_DAILY_STREAK,
+  DELETE_TASK,
 } from './types';
 
 export const editTaskDesc = (newDesc) => {
@@ -97,5 +98,21 @@ export const fetchResolved = () => {
           payload: snapshot.val(),
         });
       });
+  };
+};
+
+export const deleteTask = (taskId, today) => {
+  const db = firebase.database();
+  console.log('deleting task', taskId);
+  return (dispatch) => {
+    // delete the task from tasks table
+    const taskRef = db.ref('/tasks');
+    const todayRef = db.ref(`/resolved/${today}`);
+    taskRef.child(taskId).remove();
+    todayRef.child(taskId).remove()
+    // delete the task from today 
+    .then(() => {
+      dispatch({ type: DELETE_TASK });
+    });    
   };
 };

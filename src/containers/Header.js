@@ -22,7 +22,6 @@ class Header extends Component {
 
   render() {
     const { openModal, countResolved, countTasks } = this.props;
-    console.log('header props', this.props);
 
     return (
       <View style={styles.container}>

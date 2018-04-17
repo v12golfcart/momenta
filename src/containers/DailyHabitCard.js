@@ -18,6 +18,7 @@ import { colors } from '../themes';
 const mapDispatchToProps = {
   toggleTask: Actions.toggleTask,
   updateDailyStreak: Actions.updateDailyStreak,
+  deleteTask: Actions.deleteTask,
 };
 
 /* Components ==================================================================== */
@@ -30,7 +31,8 @@ class DailyHabitCard extends Component {
       dates, 
       resolved,
       toggleTask, 
-      updateDailyStreak 
+      updateDailyStreak,
+      deleteTask, 
     } = this.props;
 
     const arrayOfTasks = _.map(tasks, (val, tid) => {
@@ -54,6 +56,7 @@ class DailyHabitCard extends Component {
           key={task.tid}
           toggleTask={toggleTask}
           updateDailyStreak={updateDailyStreak}
+          deleteTask={deleteTask}
         />
       );
     });
@@ -85,6 +88,7 @@ DailyHabitCard.propTypes = {
   resolved: PropTypes.object.isRequired,
   toggleTask: PropTypes.func.isRequired, 
   updateDailyStreak: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */
