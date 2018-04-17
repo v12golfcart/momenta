@@ -14,6 +14,7 @@ import Swipeout from 'react-native-swipeout';
 import { Row } from './Row';
 
 // other
+import { MODAL_EDIT_TASK } from '../redux_actions/types';
 import { colors } from '../themes';
 
 /* Components ==================================================================== */
@@ -21,7 +22,7 @@ import { colors } from '../themes';
 class Daily extends Component {
 
   onPressToggleHotspot = () => {
-    const { task, dates, toggleTask, binaryIsResolved, updateDailyStreak} = this.props;
+    const { task, dates, toggleTask, binaryIsResolved, updateDailyStreak } = this.props;
     const taskId = task.tid;
     const newStreak = binaryIsResolved === 0 ? task.taskStreak + 1 : task.taskStreak - 1;
 
@@ -32,6 +33,13 @@ class Daily extends Component {
   onDeleteTask = () => {
     const { deleteTask, task, dates } = this.props;
     deleteTask(task.tid, dates.today);
+  }
+
+  onEditTask = () => {
+    const { task, editTaskId, editTaskDesc, openModal } = this.props;
+    editTaskId(task.tid);
+    editTaskDesc(task.taskDesc);
+    openModal(MODAL_EDIT_TASK);
   }
   
   getStyles = (mainStyle, resolvedStyle) => {
@@ -59,7 +67,7 @@ class Daily extends Component {
       },
       {
         component: this.renderSwipeoutButton('grey', 'Edit'),
-        onPress: () => console.log('sup')
+        onPress: this.onEditTask,
       },      
     ];
 
@@ -115,6 +123,9 @@ Daily.propTypes = {
   toggleTask: PropTypes.func.isRequired,
   updateDailyStreak: PropTypes.func.isRequired,  
   deleteTask: PropTypes.func.isRequired,
+  editTaskId: PropTypes.func.isRequired,
+  editTaskDesc: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */

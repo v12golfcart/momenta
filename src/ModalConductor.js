@@ -8,11 +8,13 @@ import { connect } from 'react-redux';
 // components
 import ModalAddPerson from './containers/ModalAddPerson';
 import ModalAddTask from './containers/ModalAddTask';
+import ModalEditTask from './containers/ModalEditTask';
 
 // other
 import { 
   MODAL_ADD_PERSON, 
   MODAL_ADD_TASK,
+  MODAL_EDIT_TASK,
 } from './redux_actions/types';
 
 /* Redux ==================================================================== */
@@ -37,6 +39,13 @@ class ModalConductor extends Component {
       case MODAL_ADD_TASK:
         return (
           <ModalAddTask
+            isModalVisible={isModalVisible}
+          />
+        );
+
+      case MODAL_EDIT_TASK:
+        return (
+          <ModalEditTask
             isModalVisible={isModalVisible}
           />
         );

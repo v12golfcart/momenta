@@ -3,6 +3,7 @@ import firebase from 'firebase';
 
 // constants
 import { 
+  EDIT_TASK_ID,
   EDIT_TASK_DESC,
   EDIT_TASK_USER,
   EDIT_TASK_STREAK,  
@@ -12,7 +13,16 @@ import {
   TOGGLE_TASK,
   UPDATE_DAILY_STREAK,
   DELETE_TASK,
+  EDIT_TASK
 } from './types';
+
+export const editTaskId = (id) => {
+  return {
+    type: EDIT_TASK_ID,
+    payload: id,
+  };
+};
+
 
 export const editTaskDesc = (newDesc) => {
   return {
@@ -47,6 +57,18 @@ export const addTask = ({ taskUserId, taskDesc, taskStreak }) => {
     })
     .then(() => {      
       dispatch({ type: ADD_TASK });
+    });
+  };
+};
+
+export const editTask = (taskId, taskDesc) => {
+  const db = firebase.database();
+
+  return (dispatch) => {
+    const taskRef = db.ref(`/tasks/${taskId}`);
+    taskRef.update({ taskDesc })
+    .then(() => {
+      dispatch({ type: EDIT_TASK });
     });
   };
 };
@@ -103,7 +125,7 @@ export const fetchResolved = () => {
 
 export const deleteTask = (taskId, today) => {
   const db = firebase.database();
-  console.log('deleting task', taskId);
+
   return (dispatch) => {
     // delete the task from tasks table
     const taskRef = db.ref('/tasks');

@@ -19,6 +19,9 @@ const mapDispatchToProps = {
   toggleTask: Actions.toggleTask,
   updateDailyStreak: Actions.updateDailyStreak,
   deleteTask: Actions.deleteTask,
+  editTaskDesc: Actions.editTaskDesc,
+  editTaskId: Actions.editTaskId,
+  openModal: Actions.openModal,
 };
 
 /* Components ==================================================================== */
@@ -33,6 +36,9 @@ class DailyHabitCard extends Component {
       toggleTask, 
       updateDailyStreak,
       deleteTask, 
+      editTaskDesc,
+      editTaskId,
+      openModal,
     } = this.props;
 
     const arrayOfTasks = _.map(tasks, (val, tid) => {
@@ -57,6 +63,9 @@ class DailyHabitCard extends Component {
           toggleTask={toggleTask}
           updateDailyStreak={updateDailyStreak}
           deleteTask={deleteTask}
+          editTaskDesc={editTaskDesc}
+          editTaskId={editTaskId}
+          openModal={openModal}
         />
       );
     });
@@ -89,6 +98,9 @@ DailyHabitCard.propTypes = {
   toggleTask: PropTypes.func.isRequired, 
   updateDailyStreak: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
+  editTaskDesc: PropTypes.func.isRequired,
+  editTaskId: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */

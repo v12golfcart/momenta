@@ -1,14 +1,17 @@
 import { 
+  EDIT_TASK_ID,
   EDIT_TASK_DESC,
   EDIT_TASK_USER,
   EDIT_TASK_STREAK,
   ADD_TASK,
+  EDIT_TASK,
   TASK_FETCH_SUCCESS,
   RESOLVED_FETCH_SUCCESS,  
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
   newTask: {
+    tid: '',
     taskDesc: '',
     taskUserId: '',
     taskStreak: '0',
@@ -19,6 +22,15 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+
+    case EDIT_TASK_ID:
+      return {
+        ...state,
+        newTask: {
+          ...state.newTask,
+          tid: action.payload,
+        }
+      };
 
     case EDIT_TASK_DESC:
       return {
@@ -52,6 +64,12 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         newTask: INITIAL_STATE.newTask,
       };
+
+    case EDIT_TASK:
+      return {
+        ...state,
+        newTask: INITIAL_STATE.newTask,
+      };      
 
     case TASK_FETCH_SUCCESS:
       return {

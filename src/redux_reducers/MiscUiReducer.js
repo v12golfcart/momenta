@@ -4,6 +4,7 @@ import {
   MODAL_CLOSE,
   ADD_USER,
   ADD_TASK,
+  EDIT_TASK,
   IS_LOADING,
   TASK_FETCH_SUCCESS,
 } from '../redux_actions/types';
@@ -46,6 +47,12 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case ADD_TASK:
+      return {
+        ...state,
+        isModalVisible: false,
+      };
+
+    case EDIT_TASK:
       return {
         ...state,
         isModalVisible: false,
