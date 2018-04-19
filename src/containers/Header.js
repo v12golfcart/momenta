@@ -21,8 +21,7 @@ const mapDispatchToProps = {
 class Header extends Component {
 
   render() {
-    const { openModal, countResolved, countTasks } = this.props;
-
+    const { openModal, countResolved, countTasks, workspaceStreakDaily } = this.props;
     return (
       <View style={styles.container}>
         <AnimatedCircularProgress
@@ -39,7 +38,7 @@ class Header extends Component {
                   Streak:
                 </Text>            
                 <Text style={styles.progressText}>
-                  {`${Math.round(2, 0)} days`}
+                  {`${workspaceStreakDaily} days`}
                 </Text>
               </View>
             )
@@ -63,6 +62,7 @@ class Header extends Component {
 Header.propTypes = {
   countResolved: PropTypes.number.isRequired,
   countTasks: PropTypes.number.isRequired,
+  workspaceStreakDaily: PropTypes.number.isRequired,
 };
 
 /* Styles ==================================================================== */

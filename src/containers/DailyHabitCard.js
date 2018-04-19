@@ -3,26 +3,13 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-
-// redux
-import * as Actions from '../redux_actions';
 
 // components
-import { Card, Row, Daily } from '../components';
+import { Card, Row } from '../components';
+import Daily from './Daily';
 
 // other
 import { colors } from '../themes';
-
-/* Redux ==================================================================== */
-const mapDispatchToProps = {
-  toggleTask: Actions.toggleTask,
-  updateDailyStreak: Actions.updateDailyStreak,
-  deleteTask: Actions.deleteTask,
-  editTaskDesc: Actions.editTaskDesc,
-  editTaskId: Actions.editTaskId,
-  openModal: Actions.openModal,
-};
 
 /* Components ==================================================================== */
 class DailyHabitCard extends Component {
@@ -33,12 +20,6 @@ class DailyHabitCard extends Component {
       tasks, 
       dates, 
       resolved,
-      toggleTask, 
-      updateDailyStreak,
-      deleteTask, 
-      editTaskDesc,
-      editTaskId,
-      openModal,
     } = this.props;
 
     const arrayOfTasks = _.map(tasks, (val, tid) => {
@@ -60,12 +41,6 @@ class DailyHabitCard extends Component {
           dates={dates}
           binaryIsResolved={binaryIsResolved}
           key={task.tid}
-          toggleTask={toggleTask}
-          updateDailyStreak={updateDailyStreak}
-          deleteTask={deleteTask}
-          editTaskDesc={editTaskDesc}
-          editTaskId={editTaskId}
-          openModal={openModal}
         />
       );
     });
@@ -95,12 +70,6 @@ DailyHabitCard.propTypes = {
   tasks: PropTypes.object.isRequired,
   dates: PropTypes.object.isRequired, 
   resolved: PropTypes.object.isRequired,
-  toggleTask: PropTypes.func.isRequired, 
-  updateDailyStreak: PropTypes.func.isRequired,
-  deleteTask: PropTypes.func.isRequired,
-  editTaskDesc: PropTypes.func.isRequired,
-  editTaskId: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */
@@ -115,4 +84,4 @@ const styles = StyleSheet.create({
 });
 
 /* Export ==================================================================== */
-export default connect(null, mapDispatchToProps)(DailyHabitCard);
+export default DailyHabitCard;

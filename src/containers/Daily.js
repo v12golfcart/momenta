@@ -9,25 +9,75 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import Swipeout from 'react-native-swipeout';
+import { connect } from 'react-redux';
+
+// redux
+import * as Actions from '../redux_actions';
 
 // components
-import { Row } from './Row';
+import { Row } from '../components';
 
 // other
 import { MODAL_EDIT_TASK } from '../redux_actions/types';
 import { colors } from '../themes';
+
+/* Redux ==================================================================== */
+const mapStateToProps = state => {
+  return {
+    workspaceStreakDaily: state.workspace.workspaceStreaks.daily,
+  };
+};
+
+const mapDispatchToProps = {
+  toggleTask: Actions.toggleTask,  
+  updateDailyStreak: Actions.updateDailyStreak,
+  deleteTask: Actions.deleteTask,
+  editTaskDesc: Actions.editTaskDesc,
+  editTaskId: Actions.editTaskId,
+  openModal: Actions.openModal,
+  workspaceStreakCheckDaily: Actions.workspaceStreakCheckDaily,
+};
 
 /* Components ==================================================================== */
 
 class Daily extends Component {
 
   onPressToggleHotspot = () => {
-    const { task, dates, toggleTask, binaryIsResolved, updateDailyStreak } = this.props;
+    const { 
+      task, 
+      tasks,
+      resolved,
+      dates, 
+      toggleTask, 
+      binaryIsResolved, 
+      updateDailyStreak,
+      workspaceStreakCheckDaily,
+      workspaceStreakDaily,
+    } = this.props;
+    
+    // task vars
     const taskId = task.tid;
-    const newStreak = binaryIsResolved === 0 ? task.taskStreak + 1 : task.taskStreak - 1;
+    const newTaskStreak = binaryIsResolved === 0 ? task.taskStreak + 1 : task.taskStreak - 1;
+    const newBinaryIsResolved = Math.abs(binaryIsResolved - 1);
+    
+    // workspace vars
+    const taskLength = Object.keys(tasks).length;
+    const resolvedLengthOld = (resolved[dates.today] ? Object.values(resolved[dates.today]) : [])
+      .filter(item => item.binaryIsResolved === 1)
+      .length;
+    const resolvedLengthNew = ((-1 + (2 * newBinaryIsResolved)) + resolvedLengthOld);
+    let newWorkspaceStreak = workspaceStreakDaily;
+    if (resolvedLengthNew === taskLength) { newWorkspaceStreak = workspaceStreakDaily + 1 }
+    if (resolvedLengthNew === (taskLength - 1) && binaryIsResolved === 1) { 
+      newWorkspaceStreak = workspaceStreakDaily - 1;
+    }
 
-    toggleTask(taskId, dates.today, Math.abs(binaryIsResolved - 1));
-    updateDailyStreak(taskId, newStreak);
+    // task functions
+    toggleTask(taskId, dates.today, newBinaryIsResolved);
+    updateDailyStreak(taskId, newTaskStreak);    
+
+    // workspace functions
+    workspaceStreakCheckDaily(newWorkspaceStreak);
   }
 
   onDeleteTask = () => {
@@ -206,4 +256,4 @@ const styles = StyleSheet.create({
 });
 
 /* Export ==================================================================== */
-export { Daily };
+export default connect(mapStateToProps, mapDispatchToProps)(Daily);

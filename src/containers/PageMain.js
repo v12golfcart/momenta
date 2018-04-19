@@ -5,6 +5,8 @@ import {
   StyleSheet, 
   View, 
   ScrollView,
+  TouchableHighlight,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -30,6 +32,7 @@ const mapStateToProps = state => {
     users: state.user.users || {},
     tasks: state.task.tasks || {},
     resolved: state.task.resolved || {},
+    workspaceStreakDaily: state.workspace.workspaceStreaks.daily,
   };
 };
 
@@ -40,6 +43,7 @@ const mapDispatchToProps = {
   updateDates: Actions.updateDates,
   updateDailyStreak: Actions.updateDailyStreak,
   setToLoading: Actions.setToLoading,
+  fetchWorkspaceInfo: Actions.fetchWorkspaceInfo,
 };
 
 /* Components ==================================================================== */
@@ -47,7 +51,7 @@ class PageMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 1,
+      counter: 0,
       appState: AppState.currentState,
       today: '',
     };
@@ -58,6 +62,7 @@ class PageMain extends Component {
     this.props.fetchUsers(); // also sets pageMain loading to true
     this.props.fetchTasks();
     this.props.fetchResolved();
+    this.props.fetchWorkspaceInfo();
     this.props.updateDates(); // also sets page main loading to false
   }
 
@@ -97,11 +102,12 @@ class PageMain extends Component {
   updateWorkspaceDatesAndStreaks = () => {
     const { dates, updateDates, tasks, resolved, updateDailyStreak } = this.props;
 
-    const today = moment().format('YYYYMMDD');
+    const today = moment().add((this.state.counter), 'days').format('YYYYMMDD');
     if (today !== dates.today) {
-      updateDates();
-
-      const yesterday = moment().add(-1, 'days').format('YYYYMMDD');
+      updateDates(this.state.counter);
+      const yesterday = moment().add(this.state.counter - 1, 'days').format('YYYYMMDD');
+      
+      // update streaks for daily tasks
       _.map(tasks, (value, tid) => {
         if (resolved[yesterday] 
           && resolved[yesterday][tid] 
@@ -109,7 +115,9 @@ class PageMain extends Component {
           return;
         }
         updateDailyStreak(tid, 0);
-      });
+      });      
+
+      // update streaks for group
     }    
   }
 
@@ -148,15 +156,17 @@ class PageMain extends Component {
   }
 
   render() {
-    const { tasks, } = this.props;
+    const { tasks, workspaceStreakDaily } = this.props;
     const countTasks = Math.max(Object.keys(tasks).length, 1);
     const countResolved = this.getCountResolved();
+    console.log('today!!!', this.props.dates.today, this.props);
 
     return (
       <View style={styles.container}>
         <Header 
           countTasks={countTasks}
           countResolved={countResolved}
+          workspaceStreakDaily={workspaceStreakDaily}
         />
         <View style={styles.wrapperScroll}>
           {this.renderSpinner()}
@@ -167,32 +177,15 @@ class PageMain extends Component {
 
         
         {/*
-        FOR MESSING WITH DAYS
+        FOR MESSING WITH DAYS*/}
         <TouchableHighlight
           onPress={() => {
-            this.props.updateDates(this.state.counter);
-              const yesterday = moment().add((-1 + this.state.counter), 'days').format('YYYYMMDD');
-              const today = moment().add((0 + this.state.counter), 'days').format('YYYYMMDD');
-              console.log('today+++', today);
-
-            _.map(tasks, (value, tid) => {
-              if (resolved[yesterday] 
-                && resolved[yesterday][tid] 
-                && resolved[yesterday][tid].binaryIsResolved === 1) {
-                console.log(`do nothing for ${value.taskDesc} [${value.taskStreak}}]`);
-                return;
-              }
-              console.log(`update streak for ${value.taskDesc} [${value.taskStreak}}]`);
-              const newStreak = 0;
-              updateDailyStreak(tid, newStreak);
-            });
-
-            this.setState({ counter: this.state.counter + 1 });
+            this.setState({ counter: this.state.counter + 1 }, this.updateWorkspaceDatesAndStreaks);
           }}
         >
           <Text style={{ color: 'white' }}>Sup</Text>
         </TouchableHighlight>
-      */}
+      
       </View>
     );
   }
@@ -202,6 +195,7 @@ PageMain.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchTasks: PropTypes.func.isRequired,
   fetchResolved: PropTypes.func.isRequired,
+  fetchWorkspaceInfo: PropTypes.func.isRequired,
   updateDates: PropTypes.func.isRequired,
   updateDailyStreak: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,
@@ -210,6 +204,7 @@ PageMain.propTypes = {
   dates: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   setToLoading: PropTypes.func.isRequired,
+  workspaceStreakDaily: PropTypes.number.isRequired,
 };
 
 /* Styles ==================================================================== */

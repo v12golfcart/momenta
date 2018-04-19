@@ -94,7 +94,7 @@ export const toggleTask = (taskId, timestamp, newBinaryIsResolved) => {
     const todayResolveRef = db.ref(`/resolved/${timestamp}/${taskId}`);
     todayResolveRef.set({ binaryIsResolved: newBinaryIsResolved })
       .then(() => dispatch({ type: TOGGLE_TASK }));
-  };
+  }; // 1 -> -1, 0 -> 1  1 - 2 * x
 };
 
 export const updateDailyStreak = (taskId, newStreak) => {
