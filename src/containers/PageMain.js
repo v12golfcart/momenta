@@ -44,6 +44,7 @@ const mapDispatchToProps = {
   updateDailyStreak: Actions.updateDailyStreak,
   setToLoading: Actions.setToLoading,
   fetchWorkspaceInfo: Actions.fetchWorkspaceInfo,
+  fetchWorkspaceResolved: Actions.fetchWorkspaceResolved,
 };
 
 /* Components ==================================================================== */
@@ -63,6 +64,7 @@ class PageMain extends Component {
     this.props.fetchTasks();
     this.props.fetchResolved();
     this.props.fetchWorkspaceInfo();
+    this.props.fetchWorkspaceResolved();
     this.props.updateDates(); // also sets page main loading to false
   }
 
@@ -196,6 +198,7 @@ PageMain.propTypes = {
   fetchTasks: PropTypes.func.isRequired,
   fetchResolved: PropTypes.func.isRequired,
   fetchWorkspaceInfo: PropTypes.func.isRequired,
+  fetchWorkspaceResolved: PropTypes.func.isRequired,
   updateDates: PropTypes.func.isRequired,
   updateDailyStreak: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,

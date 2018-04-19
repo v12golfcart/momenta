@@ -25,6 +25,7 @@ import { colors } from '../themes';
 const mapStateToProps = state => {
   return {
     workspaceStreakDaily: state.workspace.workspaceStreaks.daily,
+    workspaceResolvedDaily: state.workspace.workspaceResolvedDaily,
   };
 };
 
@@ -53,6 +54,7 @@ class Daily extends Component {
       updateDailyStreak,
       workspaceStreakCheckDaily,
       workspaceStreakDaily,
+      workspaceResolvedDaily,
     } = this.props;
     
     // task vars
@@ -67,8 +69,14 @@ class Daily extends Component {
       .length;
     const resolvedLengthNew = ((-1 + (2 * newBinaryIsResolved)) + resolvedLengthOld);
     let newWorkspaceStreak = workspaceStreakDaily;
-    if (resolvedLengthNew === taskLength) { newWorkspaceStreak = workspaceStreakDaily + 1 }
-    if (resolvedLengthNew === (taskLength - 1) && binaryIsResolved === 1) { 
+    let newBinaryWorkspaceIsResolved = 0;
+    if (resolvedLengthNew === taskLength) { 
+      newWorkspaceStreak = workspaceStreakDaily + 1;
+      newBinaryWorkspaceIsResolved = 1;
+    }
+    if (resolvedLengthNew === (taskLength - 1) 
+      && workspaceResolvedDaily[dates.today] 
+      && workspaceResolvedDaily[dates.today] === 1) { 
       newWorkspaceStreak = workspaceStreakDaily - 1;
     }
 
@@ -77,7 +85,7 @@ class Daily extends Component {
     updateDailyStreak(taskId, newTaskStreak);    
 
     // workspace functions
-    workspaceStreakCheckDaily(newWorkspaceStreak);
+    workspaceStreakCheckDaily(newWorkspaceStreak, dates.today, newBinaryWorkspaceIsResolved);
   }
 
   onDeleteTask = () => {

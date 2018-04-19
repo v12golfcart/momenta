@@ -1,6 +1,7 @@
 import { 
   UPDATE_DATES,
   WORKSPACE_INFO_FETCH_SUCCESS,
+  WORKSPACE_RESOLVED_FETCH_SUCCESS,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
@@ -32,6 +33,12 @@ export default (state = INITIAL_STATE, action) => {
           daily: action.payload.streakDaily,
         }
       };
+
+    case WORKSPACE_RESOLVED_FETCH_SUCCESS:
+      return {
+        ...state,
+        workspaceResolvedDaily: action.payload
+      }
 
     default:
       return state;
