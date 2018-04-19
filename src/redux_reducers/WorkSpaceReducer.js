@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         workspaceStreaks: {
           ...state.workspaceStreaks,
-          daily: action.payload.streakDaily,
+          daily: action.payload ? action.payload.streakDaily : 0,
         }
       };
 
@@ -38,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         workspaceResolvedDaily: action.payload
-      }
+      };
 
     default:
       return state;

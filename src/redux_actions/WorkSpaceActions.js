@@ -23,7 +23,6 @@ export const updateDates = (transformDays = 0) => {
 };
 
 export const workspaceStreakCheckDaily = (newWorkspaceStreak, today, isResolved) => {
-  console.log('workspace fx', newWorkspaceStreak, today, isResolved);
   const db = firebase.database();
   return (dispatch) => {
     const workspaceInfoRef = db.ref('/workspaceInfo');

@@ -6,7 +6,7 @@ import {
   ADD_TASK,
   EDIT_TASK,
   IS_LOADING,
-  TASK_FETCH_SUCCESS,
+  WORKSPACE_RESOLVED_FETCH_SUCCESS,
 } from '../redux_actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   isModalVisible: false,
   modalType: '',
   isLoading: {
-    pageMain: false,
+    pageMain: true,
   }
 };
 
@@ -68,7 +68,7 @@ export default (state = INITIAL_STATE, action) => {
         },
       };
 
-    case TASK_FETCH_SUCCESS: 
+    case WORKSPACE_RESOLVED_FETCH_SUCCESS: 
       return {
         ...state,
         isLoading: {

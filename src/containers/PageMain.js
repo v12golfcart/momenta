@@ -33,6 +33,7 @@ const mapStateToProps = state => {
     tasks: state.task.tasks || {},
     resolved: state.task.resolved || {},
     workspaceStreakDaily: state.workspace.workspaceStreaks.daily,
+    workspaceResolvedDaily: state.workspace.workspaceResolvedDaily,
   };
 };
 
@@ -45,6 +46,7 @@ const mapDispatchToProps = {
   setToLoading: Actions.setToLoading,
   fetchWorkspaceInfo: Actions.fetchWorkspaceInfo,
   fetchWorkspaceResolved: Actions.fetchWorkspaceResolved,
+  workspaceStreakCheckDaily: Actions.workspaceStreakCheckDaily,
 };
 
 /* Components ==================================================================== */
@@ -102,7 +104,16 @@ class PageMain extends Component {
   }
 
   updateWorkspaceDatesAndStreaks = () => {
-    const { dates, updateDates, tasks, resolved, updateDailyStreak } = this.props;
+    const { 
+      dates, 
+      updateDates, 
+      tasks, 
+      resolved, 
+      updateDailyStreak,
+      workspaceResolvedDaily,
+      isLoading,
+      workspaceStreakCheckDaily,
+    } = this.props;
 
     const today = moment().add((this.state.counter), 'days').format('YYYYMMDD');
     if (today !== dates.today) {
@@ -120,6 +131,10 @@ class PageMain extends Component {
       });      
 
       // update streaks for group
+      if (!isLoading 
+        && (!workspaceResolvedDaily[yesterday] || workspaceResolvedDaily[yesterday] === 0)) {
+        workspaceStreakCheckDaily(0, today, 0);
+      }
     }    
   }
 
@@ -161,7 +176,6 @@ class PageMain extends Component {
     const { tasks, workspaceStreakDaily } = this.props;
     const countTasks = Math.max(Object.keys(tasks).length, 1);
     const countResolved = this.getCountResolved();
-    console.log('today!!!', this.props.dates.today, this.props);
 
     return (
       <View style={styles.container}>
@@ -207,7 +221,9 @@ PageMain.propTypes = {
   dates: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   setToLoading: PropTypes.func.isRequired,
-  workspaceStreakDaily: PropTypes.number.isRequired,
+  workspaceStreakDaily: PropTypes.number,
+  workspaceResolvedDaily: PropTypes.object,
+  workspaceStreakCheckDaily: PropTypes.func.isRequired,
 };
 
 /* Styles ==================================================================== */
